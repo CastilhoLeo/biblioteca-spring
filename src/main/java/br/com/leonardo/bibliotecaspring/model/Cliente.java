@@ -1,14 +1,25 @@
 package br.com.leonardo.bibliotecaspring.model;
-import java.time.LocalDate;
+import jakarta.persistence.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
 
+import java.time.LocalDate;
+@Entity
 public class Cliente {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String sobrenome;
+    @Temporal(TemporalType.DATE)
     private LocalDate dataNascimento;
+    @ManyToOne
+    @JoinColumn(name = "endereco_id")
     private Endereco endereco;
+    @CPF(message = "CPF invalido")
     private String cpf;
+    @Length(min = 11, max = 11, message = "O número de celular está inválido!")
     private String telefone;
 
     public Cliente (){
@@ -24,12 +35,6 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
     public String getNome() {
         return nome;
     }

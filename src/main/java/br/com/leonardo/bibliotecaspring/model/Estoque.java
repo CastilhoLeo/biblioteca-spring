@@ -8,18 +8,10 @@ public class Estoque {
 
     public Estoque(){
     }
-
     public Estoque(Long id, Livro livro, int quantidade) {
+        this.id = id;
         this.livro = livro;
         this.quantidade = quantidade;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Livro getLivro() {
