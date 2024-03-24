@@ -2,12 +2,16 @@ package br.com.leonardo.bibliotecaspring.model;
 
 public class Livro {
 
+    private Long id;
     private String titulo;
     private String autor;
     private int anoPublicacao;
     private int edicao;
 
-    public Livro(String titulo, String autor, int anoPublicacao, int edicao) {
+    public Livro(){
+    }
+    public Livro(Long id, String titulo, String autor, int anoPublicacao, int edicao) {
+        this.id = id;
         this.titulo = titulo;
         this.autor = autor;
         this.anoPublicacao = anoPublicacao;
@@ -44,6 +48,14 @@ public class Livro {
 
     public void setEdicao(int edicao) {
         this.edicao = edicao;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }
