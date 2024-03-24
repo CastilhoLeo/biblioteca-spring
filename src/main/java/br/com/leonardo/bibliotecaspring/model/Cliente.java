@@ -3,6 +3,7 @@ import java.time.LocalDate;
 
 public class Cliente {
 
+    private Long id;
     private String nome;
     private String sobrenome;
     private LocalDate dataNascimento;
@@ -13,7 +14,8 @@ public class Cliente {
     public Cliente (){
     }
 
-    public Cliente(String nome, String sobrenome, LocalDate dataNascimento, Endereco endereco, String cpf, String telefone) {
+    public Cliente(Long id, String nome, String sobrenome, LocalDate dataNascimento, Endereco endereco, String cpf, String telefone) {
+        this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.dataNascimento = dataNascimento;
@@ -22,6 +24,12 @@ public class Cliente {
         this.telefone = telefone;
     }
 
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getNome() {
         return nome;
     }

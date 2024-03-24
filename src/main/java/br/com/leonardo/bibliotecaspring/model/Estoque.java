@@ -2,17 +2,25 @@ package br.com.leonardo.bibliotecaspring.model;
 
 public class Estoque {
 
+    private Long id;
     private Livro livro;
     private int quantidade;
 
     public Estoque(){
     }
 
-    public Estoque(Livro livro, int quantidade) {
+    public Estoque(Long id, Livro livro, int quantidade) {
         this.livro = livro;
         this.quantidade = quantidade;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Livro getLivro() {
         return livro;

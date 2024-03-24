@@ -2,6 +2,7 @@ package br.com.leonardo.bibliotecaspring.model;
 
 public class Livro {
 
+    private Long id;
     private String titulo;
     private String autor;
     private int anoPublicacao;
