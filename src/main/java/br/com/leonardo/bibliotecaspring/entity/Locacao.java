@@ -1,4 +1,4 @@
-package br.com.leonardo.bibliotecaspring.model;
+package br.com.leonardo.bibliotecaspring.entity;
 
 import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
 
