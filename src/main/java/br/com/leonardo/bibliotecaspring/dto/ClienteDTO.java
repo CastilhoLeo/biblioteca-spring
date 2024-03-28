@@ -1,5 +1,6 @@
 package br.com.leonardo.bibliotecaspring.dto;
 import br.com.leonardo.bibliotecaspring.entity.Endereco;
+import br.com.leonardo.bibliotecaspring.enums.Genero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +20,6 @@ public class ClienteDTO {
     private List<Endereco> endereco;
     private String cpf;
     private String telefone;
+    private Genero genero;
 
 }

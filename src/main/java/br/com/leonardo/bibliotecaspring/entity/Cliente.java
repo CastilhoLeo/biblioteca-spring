@@ -1,4 +1,5 @@
 package br.com.leonardo.bibliotecaspring.entity;
+import br.com.leonardo.bibliotecaspring.enums.Genero;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +33,8 @@ public class Cliente {
     private String cpf;
     @Length(min = 11, max = 11, message = "O número de celular está inválido!")
     private String telefone;
+    @Enumerated(EnumType.STRING)
+    private Genero genero;
 
 
 }
