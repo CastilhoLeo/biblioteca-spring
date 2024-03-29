@@ -23,20 +23,21 @@ public class ClienteController {
                 .body(this.clienteService.localizarPeloId(id));
     }
 
+
     @GetMapping("/localizarTodos") // Ainda não usarei o pageable
     public ResponseEntity<Iterable<ClienteDTO>> localizarTodos(){
         return ResponseEntity.ok().body(this.clienteService.localizarTodos());
     }
 
     @PostMapping("/cadastrarCliente")
-    public void cadastrarCliente(Cliente cliente){
-
-        clienteService.cadastrarCliente(cliente);
+    public ResponseEntity<Cliente> cadastrarCliente(Cliente cliente){
+        return ResponseEntity.ok().body(clienteService.cadastrarCliente(cliente));
     }
 
     @DeleteMapping("/deletarCliente/{id}")
-    public void deletarCliente(@PathVariable Long id){
-        clienteService.deletarCliente(id);
+    public ResponseEntity<Void> deletarCliente(@PathVariable Long id){
+        this.clienteService.deletarCliente(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/editarCliente")

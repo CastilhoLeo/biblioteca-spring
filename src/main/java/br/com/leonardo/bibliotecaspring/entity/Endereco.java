@@ -1,11 +1,12 @@
 package br.com.leonardo.bibliotecaspring.entity;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-
+@Transactional
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +23,7 @@ public class Endereco {
     private String complemento;
     private String bairro;
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn (name = "cliente_id")
     private Cliente cliente;
 
 }
