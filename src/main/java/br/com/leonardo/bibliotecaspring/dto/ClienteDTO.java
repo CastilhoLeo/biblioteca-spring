@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -17,7 +18,7 @@ public class ClienteDTO {
     private String nome;
     private String sobrenome;
     private LocalDate dataNascimento;
-    private List<Endereco> endereco;
+    private List<Endereco> endereco = new ArrayList<Endereco>();
     private String cpf;
     private String telefone;
     private Genero genero;
