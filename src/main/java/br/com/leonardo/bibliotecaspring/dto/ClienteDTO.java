@@ -2,6 +2,7 @@ package br.com.leonardo.bibliotecaspring.dto;
 import br.com.leonardo.bibliotecaspring.entity.Endereco;
 import br.com.leonardo.bibliotecaspring.enums.Genero;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ClienteDTO {
 
     private Long id;
@@ -22,5 +24,4 @@ public class ClienteDTO {
     private String cpf;
     private String telefone;
     private Genero genero;
-
 }
