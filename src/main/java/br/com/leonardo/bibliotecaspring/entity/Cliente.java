@@ -42,6 +42,4 @@ public class Cliente {
     private String telefone;
     @Enumerated(EnumType.STRING)
     private Genero genero;
-
-
 }

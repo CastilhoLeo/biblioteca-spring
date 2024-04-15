@@ -7,9 +7,6 @@ import br.com.leonardo.bibliotecaspring.formatter.Formatter;
 import br.com.leonardo.bibliotecaspring.repository.ClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +33,8 @@ public class ClienteService {
     public Iterable<ClienteDTO> localizarTodos(){
         List<ClienteDTO> listaCliente =  this.clienteRepository.findAll()
               .stream()
-              .map(clienteConverter::toDto).toList();
+              .map(clienteConverter::toDto)
+                .toList();
 
         Formatter.cpfMaskLista(listaCliente);
 
@@ -60,7 +58,6 @@ public class ClienteService {
            cliente.setTelefone(novoCliente.getTelefone());
            cliente.setDataNascimento(novoCliente.getDataNascimento());
            return clienteRepository.save(cliente);
-
     }
 
 
