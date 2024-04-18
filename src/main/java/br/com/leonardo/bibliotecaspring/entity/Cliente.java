@@ -21,12 +21,13 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
+@Table (name = "clientes")
 public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
     private String nome;
     private String sobrenome;
@@ -34,7 +35,6 @@ public class Cliente {
     private LocalDate dataNascimento;
     @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
     @Cascade(CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
     private List<Endereco> endereco = new ArrayList<Endereco>();
     @CPF(message = "CPF invalido")
     private String cpf;

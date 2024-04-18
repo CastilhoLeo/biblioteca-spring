@@ -6,6 +6,7 @@ import br.com.leonardo.bibliotecaspring.entity.Cliente;
 import br.com.leonardo.bibliotecaspring.formatter.Formatter;
 import br.com.leonardo.bibliotecaspring.repository.ClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,12 +24,13 @@ public class ClienteService {
     private ClienteConverter clienteConverter;
 
    public ClienteDTO localizarPeloId(Long id){
-       ClienteDTO clienteDto = this.clienteConverter.toDto(this.clienteRepository.findById(id).orElseThrow(()-> new EntityNotFoundException()));
-
+       ClienteDTO clienteDto = this.clienteConverter.toDto(this.clienteRepository.findById(id)
+               .orElseThrow(()-> new ValidationException("Id não localizado!")));
        clienteDto.setCpf(Formatter.cpfMask(clienteDto));
 
        return clienteDto;
         }
+
 
     public Iterable<ClienteDTO> localizarTodos(){
         List<ClienteDTO> listaCliente =  this.clienteRepository.findAll()

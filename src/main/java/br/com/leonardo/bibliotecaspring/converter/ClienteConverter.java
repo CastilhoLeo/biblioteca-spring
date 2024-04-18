@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClienteConverter {
 
-    public ClienteDTO toDto(Cliente cliente){
+    public ClienteDTO toDto(Cliente cliente) {
         return new ClienteDTO(
                 cliente.getId(),
                 cliente.getNome(),
@@ -19,15 +19,4 @@ public class ClienteConverter {
                 cliente.getGenero());
     }
 
-    public Cliente fromDto(ClienteDTO clienteDto){
-        return new Cliente(
-                clienteDto.getId(),
-                clienteDto.getNome(),
-                clienteDto.getSobrenome(),
-                clienteDto.getDataNascimento(),
-                clienteDto.getEndereco(),
-                clienteDto.getCpf(),
-                clienteDto.getTelefone(),
-                clienteDto.getGenero());
-    }
 }
