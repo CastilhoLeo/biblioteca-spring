@@ -3,10 +3,10 @@ package br.com.leonardo.bibliotecaspring.service;
 import br.com.leonardo.bibliotecaspring.converter.ClienteConverter;
 import br.com.leonardo.bibliotecaspring.dto.ClienteDTO;
 import br.com.leonardo.bibliotecaspring.entity.Cliente;
+import br.com.leonardo.bibliotecaspring.exception.ValidationException;
 import br.com.leonardo.bibliotecaspring.formatter.Formatter;
 import br.com.leonardo.bibliotecaspring.repository.ClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ public class ClienteService {
         }
 
 
-    public Iterable<ClienteDTO> localizarTodos(){
+    public List<ClienteDTO> localizarTodos(){
         List<ClienteDTO> listaCliente =  this.clienteRepository.findAll()
               .stream()
               .map(clienteConverter::toDto)
@@ -43,7 +43,8 @@ public class ClienteService {
         return listaCliente;
     }
 
-    public Cliente cadastrarCliente(Cliente cliente){
+    public Cliente cadastrarCliente(ClienteDTO clienteDTO){
+       Cliente cliente = this.clienteConverter.toEntity(clienteDTO);
        return this.clienteRepository.save(cliente);
     }
 
@@ -61,6 +62,5 @@ public class ClienteService {
            cliente.setDataNascimento(novoCliente.getDataNascimento());
            return clienteRepository.save(cliente);
     }
-
 
 }

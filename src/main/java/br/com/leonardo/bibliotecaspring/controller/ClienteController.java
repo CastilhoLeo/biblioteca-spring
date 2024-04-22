@@ -30,8 +30,8 @@ public class ClienteController {
     }
 
     @PostMapping("/cadastrarCliente")
-    public ResponseEntity<Cliente> cadastrarCliente(Cliente cliente){
-        return ResponseEntity.ok().body(clienteService.cadastrarCliente(cliente));
+    public ResponseEntity<Cliente> cadastrarCliente(ClienteDTO clienteDTO){
+        return ResponseEntity.ok().body(clienteService.cadastrarCliente(clienteDTO));
     }
 
     @DeleteMapping("/deletarCliente/{id}")

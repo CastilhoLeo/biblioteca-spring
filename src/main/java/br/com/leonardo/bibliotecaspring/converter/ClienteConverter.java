@@ -19,4 +19,16 @@ public class ClienteConverter {
                 cliente.getGenero());
     }
 
+    public Cliente toEntity(ClienteDTO clienteDTO){
+        Cliente cliente = new Cliente();
+        cliente.setNome(clienteDTO.getNome());
+        cliente.setSobrenome(clienteDTO.getSobrenome());
+        cliente.setDataNascimento(clienteDTO.getDataNascimento());
+        cliente.setEndereco(clienteDTO.getEndereco());
+        cliente.setCpf(clienteDTO.getCpf());
+        cliente.setTelefone(clienteDTO.getTelefone());
+        cliente.setGenero(clienteDTO.getGenero());
+        return cliente;
+    }
+
 }
