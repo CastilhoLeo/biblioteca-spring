@@ -4,7 +4,6 @@ import br.com.leonardo.bibliotecaspring.converter.ClienteConverter;
 import br.com.leonardo.bibliotecaspring.dto.ClienteDTO;
 import br.com.leonardo.bibliotecaspring.entity.Cliente;
 import br.com.leonardo.bibliotecaspring.exception.ValidationException;
-import br.com.leonardo.bibliotecaspring.formatter.Formatter;
 import br.com.leonardo.bibliotecaspring.repository.ClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,6 @@ public class ClienteService {
    public ClienteDTO localizarPeloId(Long id){
        ClienteDTO clienteDto = this.clienteConverter.toDto(this.clienteRepository.findById(id)
                .orElseThrow(()-> new ValidationException("Id não localizado!")));
-       clienteDto.setCpf(Formatter.cpfMask(clienteDto));
 
        return clienteDto;
         }
@@ -37,8 +35,6 @@ public class ClienteService {
               .stream()
               .map(clienteConverter::toDto)
                 .toList();
-
-        Formatter.cpfMaskLista(listaCliente);
 
         return listaCliente;
     }
