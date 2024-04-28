@@ -5,6 +5,7 @@ import br.com.leonardo.bibliotecaspring.dto.ClienteDTO;
 import br.com.leonardo.bibliotecaspring.entity.Cliente;
 import br.com.leonardo.bibliotecaspring.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class ClienteController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClienteDTO>encontrarPeloIdSimples(@PathVariable Long id){
+    public ResponseEntity<ClienteDTO>encontrarPeloId(@PathVariable Long id){
         return ResponseEntity.ok()
                 .body(this.clienteService.localizarPeloId(id));
     }
@@ -31,7 +32,7 @@ public class ClienteController {
 
     @PostMapping("/cadastrarCliente")
     public ResponseEntity<Cliente> cadastrarCliente(ClienteDTO clienteDTO){
-        return ResponseEntity.ok().body(clienteService.cadastrarCliente(clienteDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.cadastrarCliente(clienteDTO));
     }
 
     @DeleteMapping("/deletarCliente/{id}")
