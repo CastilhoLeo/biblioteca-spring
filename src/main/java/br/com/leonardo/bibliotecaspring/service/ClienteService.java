@@ -3,13 +3,10 @@ package br.com.leonardo.bibliotecaspring.service;
 import br.com.leonardo.bibliotecaspring.converter.ClienteConverter;
 import br.com.leonardo.bibliotecaspring.dto.ClienteDTO;
 import br.com.leonardo.bibliotecaspring.entity.Cliente;
-import br.com.leonardo.bibliotecaspring.formatter.Formatter;
+import br.com.leonardo.bibliotecaspring.exception.ValidationException;
 import br.com.leonardo.bibliotecaspring.repository.ClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,24 +23,24 @@ public class ClienteService {
     private ClienteConverter clienteConverter;
 
    public ClienteDTO localizarPeloId(Long id){
-       ClienteDTO clienteDto = this.clienteConverter.toDto(this.clienteRepository.findById(id).orElseThrow(()-> new EntityNotFoundException()));
-
-       clienteDto.setCpf(Formatter.cpfMask(clienteDto));
+       ClienteDTO clienteDto = this.clienteConverter.toDto(this.clienteRepository.findById(id)
+               .orElseThrow(()-> new ValidationException("Id não localizado!")));
 
        return clienteDto;
         }
 
-    public Iterable<ClienteDTO> localizarTodos(){
+
+    public List<ClienteDTO> localizarTodos(){
         List<ClienteDTO> listaCliente =  this.clienteRepository.findAll()
               .stream()
-              .map(clienteConverter::toDto).toList();
-
-        Formatter.cpfMaskLista(listaCliente);
+              .map(clienteConverter::toDto)
+                .toList();
 
         return listaCliente;
     }
 
-    public Cliente cadastrarCliente(Cliente cliente){
+    public Cliente cadastrarCliente(ClienteDTO clienteDTO){
+       Cliente cliente = this.clienteConverter.toEntity(clienteDTO);
        return this.clienteRepository.save(cliente);
     }
 
@@ -60,8 +57,6 @@ public class ClienteService {
            cliente.setTelefone(novoCliente.getTelefone());
            cliente.setDataNascimento(novoCliente.getDataNascimento());
            return clienteRepository.save(cliente);
-
     }
-
 
 }
