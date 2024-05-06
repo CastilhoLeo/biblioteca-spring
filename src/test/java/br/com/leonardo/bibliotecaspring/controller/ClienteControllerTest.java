@@ -98,9 +98,10 @@ public class ClienteControllerTest {
 
     @Test
     public void editarCliente_DeveRetornarClienteEditado() throws Exception{
+        Cliente cliente = ClienteBuilder.umCliente().comNome("Roberto").agora();
         Long clienteId = 1L;
-        Cliente novoCliente = ClienteBuilder.umCliente().comNome("Roberto").agora();
-        Mockito.when(service.editarCliente(clienteId,novoCliente)).thenReturn(novoCliente);
+        ClienteDTO novoCliente = ClienteDtoBuilder.umCliente().comNome("Roberto").agora();
+        Mockito.when(service.editarCliente(clienteId,novoCliente)).thenReturn(cliente);
 
             mockMvc.perform(put("/api/clientes/{id}", 1L)
                             .param("id",String.valueOf(clienteId))

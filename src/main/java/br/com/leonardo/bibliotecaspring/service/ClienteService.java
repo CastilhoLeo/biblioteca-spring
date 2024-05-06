@@ -48,8 +48,8 @@ public class ClienteService {
        clienteRepository.deleteById(id);
     }
 
-    public Cliente editarCliente(Long id, Cliente novoCliente){
-           Cliente cliente = clienteRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Cliente nao econtrado"));
+    public Cliente editarCliente(Long id, ClienteDTO novoCliente){
+           Cliente cliente = clienteRepository.findById(id).orElseThrow(()-> new ValidationException("Cliente nao encontrado"));
            cliente.setCpf(novoCliente.getCpf());
            cliente.setNome(novoCliente.getNome());
            cliente.setGenero(novoCliente.getGenero());

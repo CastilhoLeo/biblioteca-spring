@@ -14,11 +14,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
@@ -48,7 +47,6 @@ public class ClienteServiceTest {
     @Test
     public void localizarPeloId_DeveRetornarExceptionParaIdNaoEncontrado(){
         Mockito.when(repository.findById(2L)).thenReturn(Optional.empty());
-
         ValidationException ex = Assertions.assertThrows(ValidationException.class, ()->service.localizarPeloId(2L));
 
         Assertions.assertEquals(ex.getMessage(), "Id não localizado!");
@@ -68,6 +66,19 @@ public class ClienteServiceTest {
 
 
         Assertions.assertNotNull(resultado);
+        Assertions.assertTrue(resultado instanceof List<ClienteDTO>);
+        Assertions.assertEquals(resultado.size(), 1);
+        Assertions.assertEquals(resultado.contains(clienteDTO), true);
+        Assertions.assertEquals(resultado.get(0).getNome(), "Leonardo");
+    }
+
+    @Test
+    public void localizarTodos_DeveRetornarUmaListaVazia(){
+        Mockito.when(repository.findAll()).thenReturn(Collections.emptyList());
+
+        List<ClienteDTO> resultado = service.localizarTodos();
+
+        Assertions.assertTrue(resultado.isEmpty());
         Assertions.assertTrue(resultado instanceof List<ClienteDTO>);
     }
 
@@ -95,13 +106,25 @@ public class ClienteServiceTest {
     @Test
     public void editarCliente_DeveRetornarDadosAlterados(){
         Cliente cliente = ClienteBuilder.umCliente().agora();
-        Cliente novoCliente = ClienteBuilder.umCliente().comNome("Joao").agora();
+        ClienteDTO novoCliente = ClienteDtoBuilder.umCliente().comNome("Joao").agora();
         Mockito.when(repository.findById(1L)).thenReturn(Optional.of(cliente));
-        Mockito.when(repository.save(any(Cliente.class))).thenReturn(cliente);
+        Mockito.when(repository.save(any())).thenReturn(cliente);
 
         Cliente clienteEditado = service.editarCliente(1L, novoCliente);
 
         Assertions.assertEquals(cliente.getNome(), "Joao");
+        Assertions.assertEquals(clienteEditado.getClass(), Cliente.class);
+    }
+
+    @Test
+    public void editarCliente_DeveRetornarErroPorIdNaoLocalizado(){
+        Cliente cliente = ClienteBuilder.umCliente().agora();
+        ClienteDTO novoCliente = ClienteDtoBuilder.umCliente().comNome("Joao").agora();
+        Mockito.when(repository.findById(1L)).thenReturn(Optional.empty());
+
+        ValidationException ex = Assertions.assertThrows(ValidationException.class, ()->service.editarCliente(1L, novoCliente));
+        Assertions.assertEquals(ex.getMessage(), "Cliente nao encontrado");
+
     }
 
 }

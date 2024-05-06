@@ -7,8 +7,9 @@ import br.com.leonardo.bibliotecaspring.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.Method;
 
 
 @RestController
@@ -32,7 +33,7 @@ public class ClienteController {
     }
 
     @PostMapping("/cadastrarCliente")
-    public ResponseEntity<Cliente> cadastrarCliente(@RequestBody ClienteDTO clienteDTO){
+    public ResponseEntity<Cliente> cadastrarCliente(@RequestBody ClienteDTO clienteDTO ){
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.cadastrarCliente(clienteDTO));
     }
 
@@ -43,7 +44,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> editarCliente(@PathVariable Long id, @RequestBody Cliente cliente){
-        return ResponseEntity.ok().body(this.clienteService.editarCliente(id, cliente));
+    public ResponseEntity<Cliente> editarCliente(@PathVariable Long id, @RequestBody ClienteDTO clienteDto){
+        return ResponseEntity.ok().body(this.clienteService.editarCliente(id, clienteDto));
     }
 }
