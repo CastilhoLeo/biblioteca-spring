@@ -127,6 +127,9 @@ public class ClienteServiceTest {
 
     }
 
+    @Test
+    public void pesquisaDinamica_DeveRetornarTodosOsValores
+
 
 
 }
