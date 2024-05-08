@@ -7,6 +7,9 @@ import br.com.leonardo.bibliotecaspring.exception.ValidationException;
 import br.com.leonardo.bibliotecaspring.repository.ClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,6 +60,18 @@ public class ClienteService {
            cliente.setTelefone(novoCliente.getTelefone());
            cliente.setDataNascimento(novoCliente.getDataNascimento());
            return clienteRepository.save(cliente);
+    }
+
+    public Page<ClienteDTO> pesquisaDinamica(String nome, String cpf,  Pageable pageable){
+       if(nome!=null || cpf!=null) {
+           Page<ClienteDTO> pageClienteDto = this.clienteRepository.pesquisaDinamica(nome, cpf, pageable)
+                   .map(cliente -> this.clienteConverter.toDto(cliente));
+           return pageClienteDto;
+       }
+
+       Page<ClienteDTO> pageClienteDto = this.clienteRepository
+               .findAll(pageable).map(cliente->clienteConverter.toDto(cliente));
+       return pageClienteDto;
     }
 
 }

@@ -10,4 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
+    @Query("SELECT c FROM Cliente c WHERE c.nome ILIKE %:nome% OR c.cpf ILIKE %:cpf%")
+    Page<Cliente> pesquisaDinamica (String nome, String cpf, Pageable pageable);
+
 }
