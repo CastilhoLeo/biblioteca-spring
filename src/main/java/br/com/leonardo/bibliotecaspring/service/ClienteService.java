@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -63,15 +64,16 @@ public class ClienteService {
     }
 
     public Page<ClienteDTO> pesquisaDinamica(String nome, String cpf,  Pageable pageable){
-       if(nome!=null || cpf!=null) {
-           Page<ClienteDTO> pageClienteDto = this.clienteRepository.pesquisaDinamica(nome, cpf, pageable)
-                   .map(cliente -> this.clienteConverter.toDto(cliente));
+       if(nome == null && cpf == null ) {
+           Page<ClienteDTO> pageClienteDto = this.clienteRepository
+                   .findAll(pageable).map(cliente -> this.clienteConverter.toDto(cliente));
            return pageClienteDto;
        }
+        Page<ClienteDTO> pageClienteDto = this.clienteRepository.pesquisaDinamica(nome, cpf, pageable)
+                .map(cliente -> this.clienteConverter.toDto(cliente));
+        return pageClienteDto;
 
-       Page<ClienteDTO> pageClienteDto = this.clienteRepository
-               .findAll(pageable).map(cliente->clienteConverter.toDto(cliente));
-       return pageClienteDto;
+
     }
 
 }

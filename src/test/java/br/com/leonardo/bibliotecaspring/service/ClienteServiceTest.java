@@ -14,11 +14,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
 public class ClienteServiceTest {
@@ -40,16 +47,16 @@ public class ClienteServiceTest {
         Mockito.when(clienteConverter.toDto(cliente)).thenReturn(clienteDTO);
         ClienteDTO resultado = service.localizarPeloId(cliente.getId());
 
-        Assertions.assertNotNull(resultado);
-        Assertions.assertEquals(ClienteDTO.class, resultado.getClass());
+        assertNotNull(resultado);
+        assertEquals(ClienteDTO.class, resultado.getClass());
     }
 
     @Test
     public void localizarPeloId_DeveRetornarExceptionParaIdNaoEncontrado(){
         Mockito.when(repository.findById(2L)).thenReturn(Optional.empty());
-        ValidationException ex = Assertions.assertThrows(ValidationException.class, ()->service.localizarPeloId(2L));
+        ValidationException ex = assertThrows(ValidationException.class, ()->service.localizarPeloId(2L));
 
-        Assertions.assertEquals(ex.getMessage(), "Id não localizado!");
+        assertEquals(ex.getMessage(), "Id não localizado!");
     }
 
     @Test
@@ -65,11 +72,11 @@ public class ClienteServiceTest {
         List<ClienteDTO> resultado = service.localizarTodos();
 
 
-        Assertions.assertNotNull(resultado);
-        Assertions.assertTrue(resultado instanceof List<ClienteDTO>);
-        Assertions.assertEquals(resultado.size(), 1);
-        Assertions.assertEquals(resultado.contains(clienteDTO), true);
-        Assertions.assertEquals(resultado.get(0).getNome(), "Leonardo");
+        assertNotNull(resultado);
+        assertTrue(resultado instanceof List<ClienteDTO>);
+        assertEquals(resultado.size(), 1);
+        assertEquals(resultado.contains(clienteDTO), true);
+        assertEquals(resultado.get(0).getNome(), "Leonardo");
     }
 
     @Test
@@ -78,8 +85,8 @@ public class ClienteServiceTest {
 
         List<ClienteDTO> resultado = service.localizarTodos();
 
-        Assertions.assertTrue(resultado.isEmpty());
-        Assertions.assertTrue(resultado instanceof List<ClienteDTO>);
+        assertTrue(resultado.isEmpty());
+        assertTrue(resultado instanceof List<ClienteDTO>);
     }
 
     @Test
@@ -90,9 +97,9 @@ public class ClienteServiceTest {
 
         Cliente resultado = service.cadastrarCliente(clienteDTO);
 
-        Assertions.assertNotNull(resultado);
-        Assertions.assertEquals(resultado.getClass(), Cliente.class);
-        Assertions.assertEquals(resultado.getId(), 1L);
+        assertNotNull(resultado);
+        assertEquals(resultado.getClass(), Cliente.class);
+        assertEquals(resultado.getId(), 1L);
     }
 
     @Test
@@ -100,7 +107,7 @@ public class ClienteServiceTest {
         Cliente cliente = ClienteBuilder.umCliente().agora();
         service.deletarCliente(cliente.getId());
 
-        Mockito.verify(repository,Mockito.times(1)).deleteById(1L);
+        Mockito.verify(repository, times(1)).deleteById(1L);
     }
 
     @Test
@@ -112,8 +119,8 @@ public class ClienteServiceTest {
 
         Cliente clienteEditado = service.editarCliente(1L, novoCliente);
 
-        Assertions.assertEquals(cliente.getNome(), "Joao");
-        Assertions.assertEquals(clienteEditado.getClass(), Cliente.class);
+        assertEquals(cliente.getNome(), "Joao");
+        assertEquals(clienteEditado.getClass(), Cliente.class);
     }
 
     @Test
@@ -122,13 +129,34 @@ public class ClienteServiceTest {
         ClienteDTO novoCliente = ClienteDtoBuilder.umCliente().comNome("Joao").agora();
         Mockito.when(repository.findById(1L)).thenReturn(Optional.empty());
 
-        ValidationException ex = Assertions.assertThrows(ValidationException.class, ()->service.editarCliente(1L, novoCliente));
-        Assertions.assertEquals(ex.getMessage(), "Cliente nao encontrado");
+        ValidationException ex = assertThrows(ValidationException.class, ()->service.editarCliente(1L, novoCliente));
+        assertEquals(ex.getMessage(), "Cliente nao encontrado");
 
     }
 
     @Test
-    public void pesquisaDinamica_DeveRetornarTodosOsValores
+    public void pesquisaDinamica_DeveRetornarTodosOsValores(){
+
+        Pageable pageable = PageRequest.of(0, 10);
+
+        List<Cliente> lista = new ArrayList<>();
+        lista.add(ClienteBuilder.umCliente().agora());
+        lista.add(ClienteBuilder.umCliente().comId(2L).comNome("Maria").agora());
+        lista.add(ClienteBuilder.umCliente().comId(3L).comNome("Joao").agora());
+
+        Page<Cliente> page = new PageImpl<>(lista);
+
+        Mockito.when(repository.findAll(any(Pageable.class))).thenReturn((page));
+
+        Page<ClienteDTO> pageCriado = service.pesquisaDinamica(null, null, pageable);
+
+        pageCriado.getContent().stream().forEach(cliente->System.out.println(cliente));
+
+       Mockito.verify(repository, times(1)).findAll(any(Pageable.class));
+       Assertions.assertNotNull(pageCriado);
+       Assertions.assertEquals(3, pageCriado.getContent().size());
+
+    }
 
 
 
