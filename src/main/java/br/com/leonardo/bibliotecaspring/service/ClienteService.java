@@ -6,6 +6,7 @@ import br.com.leonardo.bibliotecaspring.entity.Cliente;
 import br.com.leonardo.bibliotecaspring.exception.ValidationException;
 import br.com.leonardo.bibliotecaspring.repository.ClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.hibernate.service.spi.InjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,8 +24,8 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    @Autowired
-    private ClienteConverter clienteConverter;
+
+    private ClienteConverter clienteConverter = new ClienteConverter();
 
    public ClienteDTO localizarPeloId(Long id){
        ClienteDTO clienteDto = this.clienteConverter.toDto(this.clienteRepository.findById(id)
@@ -64,16 +65,15 @@ public class ClienteService {
     }
 
     public Page<ClienteDTO> pesquisaDinamica(String nome, String cpf,  Pageable pageable){
-       if(nome == null && cpf == null ) {
-           Page<ClienteDTO> pageClienteDto = this.clienteRepository
-                   .findAll(pageable).map(cliente -> this.clienteConverter.toDto(cliente));
+
+       if(nome == "" && cpf == "" ) {
+           Page<ClienteDTO> pageClienteDto = this.clienteRepository.findAll(pageable).map(clienteConverter::toDto);
            return pageClienteDto;
        }
+
         Page<ClienteDTO> pageClienteDto = this.clienteRepository.pesquisaDinamica(nome, cpf, pageable)
-                .map(cliente -> this.clienteConverter.toDto(cliente));
+                .map(clienteConverter::toDto);
         return pageClienteDto;
-
-
     }
 
 }

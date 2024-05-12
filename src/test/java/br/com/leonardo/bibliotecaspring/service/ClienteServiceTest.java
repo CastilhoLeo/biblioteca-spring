@@ -14,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -26,15 +28,12 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
-
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class ClienteServiceTest {
 
     @Mock
     private ClienteRepository repository;
-
-    @Mock
-    private ClienteConverter clienteConverter;
 
     @InjectMocks
     private ClienteService service;
@@ -44,8 +43,9 @@ public class ClienteServiceTest {
         Cliente cliente = ClienteBuilder.umCliente().agora();
         ClienteDTO clienteDTO = ClienteDtoBuilder.umCliente().agora();
         Mockito.when(repository.findById(cliente.getId())).thenReturn(Optional.of(cliente));
-        Mockito.when(clienteConverter.toDto(cliente)).thenReturn(clienteDTO);
+       // Mockito.when(clienteConverter.toDto(cliente)).thenReturn(clienteDTO);
         ClienteDTO resultado = service.localizarPeloId(cliente.getId());
+        System.out.println(resultado);
 
         assertNotNull(resultado);
         assertEquals(ClienteDTO.class, resultado.getClass());
@@ -68,7 +68,7 @@ public class ClienteServiceTest {
         listaClientes.add(cliente);
 
         Mockito.when(repository.findAll()).thenReturn(listaClientes);
-        Mockito.when(clienteConverter.toDto(cliente)).thenReturn(clienteDTO);
+      //  Mockito.when(clienteConverter.toDto(cliente)).thenReturn(clienteDTO);
         List<ClienteDTO> resultado = service.localizarTodos();
 
 
@@ -150,11 +150,12 @@ public class ClienteServiceTest {
 
         Page<ClienteDTO> pageCriado = service.pesquisaDinamica(null, null, pageable);
 
-        pageCriado.getContent().stream().forEach(cliente->System.out.println(cliente));
+        pageCriado.forEach((c) -> System.out.println(c));
 
-       Mockito.verify(repository, times(1)).findAll(any(Pageable.class));
+        Mockito.verify(repository, times(1)).findAll(any(Pageable.class));
        Assertions.assertNotNull(pageCriado);
        Assertions.assertEquals(3, pageCriado.getContent().size());
+
 
     }
 
