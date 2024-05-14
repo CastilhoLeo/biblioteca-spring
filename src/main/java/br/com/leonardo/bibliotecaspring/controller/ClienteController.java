@@ -34,13 +34,7 @@ public class ClienteController {
             return ok().body(this.clienteService.pesquisaDinamica(nome, cpf, pageable));
     }
 
-
-    @GetMapping("/localizarTodos") //pode ser substituido pelo metodo pesquisaPaginada
-    public ResponseEntity<Iterable<ClienteDTO>> localizarTodos(){
-        return ok().body(this.clienteService.localizarTodos());
-    }
-
-    @PostMapping("/cadastrarCliente")
+    @PostMapping("/cadastro")
     public ResponseEntity<Cliente> cadastrarCliente( @RequestBody ClienteDTO clienteDTO ){
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.cadastrarCliente(clienteDTO));
     }

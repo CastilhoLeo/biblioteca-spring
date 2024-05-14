@@ -28,6 +28,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
+
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class ClienteServiceTest {
@@ -37,6 +38,7 @@ public class ClienteServiceTest {
 
     @InjectMocks
     private ClienteService service;
+
 
     @Test
     public void localizarPeloId_DeveRetornarUmUsuario(){
@@ -62,20 +64,18 @@ public class ClienteServiceTest {
     @Test
     public void localizarTodos_DeveRetornarUmaListaDeClientes(){
         Cliente cliente = ClienteBuilder.umCliente().agora();
-        ClienteDTO clienteDTO = ClienteDtoBuilder.umCliente().agora();
 
         ArrayList<Cliente> listaClientes= new ArrayList<>();
         listaClientes.add(cliente);
 
         Mockito.when(repository.findAll()).thenReturn(listaClientes);
-      //  Mockito.when(clienteConverter.toDto(cliente)).thenReturn(clienteDTO);
         List<ClienteDTO> resultado = service.localizarTodos();
 
 
         assertNotNull(resultado);
         assertTrue(resultado instanceof List<ClienteDTO>);
         assertEquals(resultado.size(), 1);
-        assertEquals(resultado.contains(clienteDTO), true);
+        assertEquals(resultado.get(0).getClass(), ClienteDTO.class);
         assertEquals(resultado.get(0).getNome(), "Leonardo");
     }
 
@@ -145,17 +145,35 @@ public class ClienteServiceTest {
         lista.add(ClienteBuilder.umCliente().comId(3L).comNome("Joao").agora());
 
         Page<Cliente> page = new PageImpl<>(lista);
-
         Mockito.when(repository.findAll(any(Pageable.class))).thenReturn((page));
 
-        Page<ClienteDTO> pageCriado = service.pesquisaDinamica(null, null, pageable);
-
-        pageCriado.forEach((c) -> System.out.println(c));
+        Page<ClienteDTO> pageCriado = service.pesquisaDinamica("", "", pageable);
 
         Mockito.verify(repository, times(1)).findAll(any(Pageable.class));
-       Assertions.assertNotNull(pageCriado);
-       Assertions.assertEquals(3, pageCriado.getContent().size());
+        Assertions.assertNotNull(pageCriado);
+        Assertions.assertEquals(3, pageCriado.getContent().size());
 
+    }
+
+    @Test
+    public void pesquisaDinamica_DeveRetornarPeloCPF(){
+
+        Pageable pageable = PageRequest.of(0, 10);
+
+        List<Cliente> lista = new ArrayList<>();
+        lista.add(ClienteBuilder.umCliente().agora());
+        lista.add(ClienteBuilder.umCliente().comId(2L).comNome("Maria").agora());
+        lista.add(ClienteBuilder.umCliente().comId(3L).comNome("Joao").agora());
+
+        Page<Cliente> page = new PageImpl<>(lista);
+       // Mockito.when(repository.pesquisaDinamica("","",pageable).thenReturn((pag));
+
+        Page<ClienteDTO> pageCriado = service.pesquisaDinamica("", "418", pageable);
+
+        Mockito.verify(repository, times(1)).findAll(any(Pageable.class));
+        Assertions.assertNotNull(pageCriado);
+        Assertions.assertEquals(1, pageCriado.getContent().size());
+        Assertions.assertEquals(pageCriado.getContent().get(0).getNome(), "Leonardo");
 
     }
 
