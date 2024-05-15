@@ -14,11 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -64,29 +68,30 @@ public class ClienteControllerTest {
         ClienteDTO cliente = ClienteDtoBuilder.umCliente().agora();
         Mockito.when(service.cadastrarCliente(any(ClienteDTO.class))).thenReturn(new Cliente());
 
-        mockMvc.perform(post("/api/clientes/cadastrarCliente")
+        mockMvc.perform(post("/api/clientes/cadastro")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(cliente)))
                 .andExpect(status().isCreated());
     }
 
     @Test
-    public void localizarTodos_deveRetornarUmaListaDeClientes() throws Exception {
+    public void localizarTodos_deveRetornarUmPageableDeClientes() throws Exception {
         List<ClienteDTO> listaCliente = new ArrayList<>();
         ClienteDTO clienteDTO = ClienteDtoBuilder.umCliente().agora();
         listaCliente.add(clienteDTO);
-        Mockito.when(service.localizarTodos()).thenReturn(listaCliente);
-        System.out.println(listaCliente);
+        Page<ClienteDTO> pageCliente = new PageImpl<>(listaCliente);
+        Mockito.when(service.pesquisaDinamica(anyString(), anyString(), any(Pageable.class))).thenReturn(pageCliente);
 
-        mockMvc.perform(get("/api/clientes/localizarTodos"))
+        mockMvc.perform(get("/api/clientes")
+                .param("nome","teste").param("cpf", "123").param("pageable", "pageable"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[0].nome", Matchers.is("Leonardo")))
-                .andExpect(jsonPath("$.[0].sobrenome", Matchers.is("Castilho")))
-                .andExpect(jsonPath("$.[0].dataNascimento", Matchers.is("1992-11-13")))
-                .andExpect(jsonPath("$.[0].cpf", Matchers.is("41861297890")))
-                .andExpect(jsonPath("$.[0].telefone", Matchers.is("44998240563")))
-                .andExpect(jsonPath("$.[0].genero", Matchers.is("MASCULINO")))
-                .andExpect(jsonPath("$.[0].endereco", Matchers.is(List.of())));
+                .andExpect(jsonPath("$.content[0].nome", Matchers.is("Leonardo")))
+                .andExpect(jsonPath("$.content[0].sobrenome", Matchers.is("Castilho")))
+                .andExpect(jsonPath("$.content[0].dataNascimento", Matchers.is("1992-11-13")))
+                .andExpect(jsonPath("$.content[0].cpf", Matchers.is("41861297890")))
+                .andExpect(jsonPath("$.content[0].telefone", Matchers.is("44998240563")))
+                .andExpect(jsonPath("$.content[0].genero", Matchers.is("MASCULINO")))
+                .andExpect(jsonPath("$.content[0].endereco", Matchers.is(List.of())));
     }
 
     @Test
