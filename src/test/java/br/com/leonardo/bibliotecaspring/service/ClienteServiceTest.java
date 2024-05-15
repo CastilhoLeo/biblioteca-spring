@@ -27,6 +27,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 
 @SpringBootTest
@@ -162,21 +163,17 @@ public class ClienteServiceTest {
 
         List<Cliente> lista = new ArrayList<>();
         lista.add(ClienteBuilder.umCliente().agora());
-        lista.add(ClienteBuilder.umCliente().comId(2L).comNome("Maria").agora());
-        lista.add(ClienteBuilder.umCliente().comId(3L).comNome("Joao").agora());
 
         Page<Cliente> page = new PageImpl<>(lista);
-       // Mockito.when(repository.pesquisaDinamica("","",pageable).thenReturn((pag));
+        Mockito.when(repository.pesquisaDinamica(anyString(),anyString(),any(Pageable.class))).thenReturn(page);
 
         Page<ClienteDTO> pageCriado = service.pesquisaDinamica("", "418", pageable);
 
-        Mockito.verify(repository, times(1)).findAll(any(Pageable.class));
+        Mockito.verify(repository, times(1)).pesquisaDinamica("","418", pageable);
         Assertions.assertNotNull(pageCriado);
         Assertions.assertEquals(1, pageCriado.getContent().size());
         Assertions.assertEquals(pageCriado.getContent().get(0).getNome(), "Leonardo");
 
     }
-
-
 
 }
