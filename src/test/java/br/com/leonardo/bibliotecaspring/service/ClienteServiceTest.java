@@ -2,7 +2,6 @@ package br.com.leonardo.bibliotecaspring.service;
 
 import br.com.leonardo.bibliotecaspring.builders.ClienteBuilder;
 import br.com.leonardo.bibliotecaspring.builders.ClienteDtoBuilder;
-import br.com.leonardo.bibliotecaspring.converter.ClienteConverter;
 import br.com.leonardo.bibliotecaspring.dto.ClienteDTO;
 import br.com.leonardo.bibliotecaspring.entity.Cliente;
 import br.com.leonardo.bibliotecaspring.exception.ValidationException;
@@ -14,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -24,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -46,7 +43,6 @@ public class ClienteServiceTest {
         Cliente cliente = ClienteBuilder.umCliente().agora();
         ClienteDTO clienteDTO = ClienteDtoBuilder.umCliente().agora();
         Mockito.when(repository.findById(cliente.getId())).thenReturn(Optional.of(cliente));
-       // Mockito.when(clienteConverter.toDto(cliente)).thenReturn(clienteDTO);
         ClienteDTO resultado = service.localizarPeloId(cliente.getId());
         System.out.println(resultado);
 

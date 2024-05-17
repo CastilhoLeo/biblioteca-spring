@@ -2,10 +2,7 @@ package br.com.leonardo.bibliotecaspring.entity;
 import br.com.leonardo.bibliotecaspring.enums.Genero;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Fetch;
@@ -23,8 +20,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Entity
-@Table (name = "clientes")
+@Table (name = "cliente")
 public class Cliente {
 
     @Id
