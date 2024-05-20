@@ -35,15 +35,6 @@ public class ClienteService {
         }
 
 
-    public List<ClienteDTO> localizarTodos(){
-        List<ClienteDTO> listaCliente =  this.clienteRepository.findAll()
-              .stream()
-              .map(clienteConverter::toDto)
-                .toList();
-
-        return listaCliente;
-    }
-
     public Cliente cadastrarCliente(ClienteDTO clienteDTO){
        Cliente cliente = this.clienteConverter.toEntity(clienteDTO);
        return this.clienteRepository.save(cliente);

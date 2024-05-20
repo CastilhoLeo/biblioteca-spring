@@ -58,33 +58,6 @@ public class ClienteServiceTest {
         assertEquals(ex.getMessage(), "Id não localizado!");
     }
 
-    @Test
-    public void localizarTodos_DeveRetornarUmaListaDeClientes(){
-        Cliente cliente = ClienteBuilder.umCliente().agora();
-
-        ArrayList<Cliente> listaClientes= new ArrayList<>();
-        listaClientes.add(cliente);
-
-        Mockito.when(repository.findAll()).thenReturn(listaClientes);
-        List<ClienteDTO> resultado = service.localizarTodos();
-
-
-        assertNotNull(resultado);
-        assertTrue(resultado instanceof List<ClienteDTO>);
-        assertEquals(resultado.size(), 1);
-        assertEquals(resultado.get(0).getClass(), ClienteDTO.class);
-        assertEquals(resultado.get(0).getNome(), "Leonardo");
-    }
-
-    @Test
-    public void localizarTodos_DeveRetornarUmaListaVazia(){
-        Mockito.when(repository.findAll()).thenReturn(Collections.emptyList());
-
-        List<ClienteDTO> resultado = service.localizarTodos();
-
-        assertTrue(resultado.isEmpty());
-        assertTrue(resultado instanceof List<ClienteDTO>);
-    }
 
     @Test
     public void cadastrarCliente_DeveSalvarUmCLiente(){
