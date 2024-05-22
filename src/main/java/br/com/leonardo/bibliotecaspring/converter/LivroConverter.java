@@ -2,7 +2,9 @@ package br.com.leonardo.bibliotecaspring.converter;
 
 import br.com.leonardo.bibliotecaspring.dto.LivroDTO;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LivroConverter {
 
     public LivroDTO toDto(Livro livro){

@@ -2,10 +2,6 @@ package br.com.leonardo.bibliotecaspring.converter;
 
 import br.com.leonardo.bibliotecaspring.dto.ClienteDTO;
 import br.com.leonardo.bibliotecaspring.entity.Cliente;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service

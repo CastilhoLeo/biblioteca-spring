@@ -19,7 +19,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
@@ -63,7 +62,7 @@ public class ClienteServiceTest {
     public void cadastrarCliente_DeveSalvarUmCLiente(){
         Cliente cliente = ClienteBuilder.umCliente().agora();
         ClienteDTO clienteDTO = ClienteDtoBuilder.umCliente().agora();
-        Mockito.when(repository.save(any())).thenReturn(cliente);
+        Mockito.when(repository.save(any(Cliente.class))).thenReturn(cliente);
 
         Cliente resultado = service.cadastrarCliente(clienteDTO);
 

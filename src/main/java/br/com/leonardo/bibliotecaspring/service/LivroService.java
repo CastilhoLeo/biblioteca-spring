@@ -16,8 +16,7 @@ public class LivroService {
     @Autowired
     private LivroRepository repository;
 
-    @Autowired
-    private LivroConverter livroConverter;
+    private LivroConverter livroConverter = new LivroConverter();
 
     public Livro cadastrarLivro(LivroDTO livroDTO){
         Livro livro = livroConverter.toEntity(livroDTO);
