@@ -2,9 +2,10 @@ package br.com.leonardo.bibliotecaspring.converter;
 
 import br.com.leonardo.bibliotecaspring.dto.ClienteDTO;
 import br.com.leonardo.bibliotecaspring.entity.Cliente;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component
 public class ClienteConverter {
 
 

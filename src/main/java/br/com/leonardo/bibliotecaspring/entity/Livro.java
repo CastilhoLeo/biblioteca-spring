@@ -18,6 +18,8 @@ import java.time.LocalDate;
 public class Livro {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
     private String titulo;
     private String autor;

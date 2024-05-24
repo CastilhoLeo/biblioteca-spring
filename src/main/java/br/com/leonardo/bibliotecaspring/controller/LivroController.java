@@ -13,35 +13,38 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping("/api/livros")
 public class LivroController {
 
     @Autowired
     private LivroService service;
 
-    @GetMapping("/livros/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<LivroDTO> localizarPeloId(@PathVariable Long id){
         return ResponseEntity.ok().body(service.pesquisarPeloId(id));
     }
 
-    @PostMapping("/livros/cadastro")
+    @PostMapping("/cadastro")
     public ResponseEntity<Livro> cadastrarLivro(@RequestBody LivroDTO livro){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrarLivro(livro));
     }
 
-    @DeleteMapping("/livros/{id}")
-    public ResponseEntity<Void> deletearLivro(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarLivro(@PathVariable Long id){
         service.deletarLivro(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/livros/{id}")
-    public ResponseEntity<Livro> editarCliente(@PathVariable Long id, @PathVariable LivroDTO clienteEditado){
+    @PutMapping("/{id}")
+    public ResponseEntity<Livro> editarCliente(@PathVariable Long id, @RequestBody LivroDTO clienteEditado){
        return ResponseEntity.accepted().body(service.editarLivro(id, clienteEditado));
     }
 
-    @GetMapping("/livros")
-    public ResponseEntity<Page<LivroDTO>> pesquisaDinamica(@RequestParam String titulo, @RequestParam String autor, Pageable pageable){
+    @GetMapping("")
+    public ResponseEntity<Page<LivroDTO>> pesquisaDinamica(@RequestParam(value = "titulo", required = false) String titulo,
+                                                           @RequestParam(value = "autor", required = false) String autor,
+                                                           Pageable pageable){
         return ResponseEntity.ok().body(service.pesquisDinamica(titulo, autor, pageable));
     }
 
