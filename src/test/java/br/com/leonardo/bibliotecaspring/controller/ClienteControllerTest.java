@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -76,6 +77,7 @@ public class ClienteControllerTest {
 
     @Test
     public void localizarTodos_deveRetornarUmPageableDeClientes() throws Exception {
+        Pageable pageable = PageRequest.of(2,5);
         List<ClienteDTO> listaCliente = new ArrayList<>();
         ClienteDTO clienteDTO = ClienteDtoBuilder.umCliente().agora();
         listaCliente.add(clienteDTO);
@@ -83,7 +85,11 @@ public class ClienteControllerTest {
         Mockito.when(service.pesquisaDinamica(anyString(), anyString(), any(Pageable.class))).thenReturn(pageCliente);
 
         mockMvc.perform(get("/api/clientes")
-                .param("nome","teste").param("cpf", "123").param("pageable", "pageable"))
+                        .param("nome","teste")
+                        .param("cpf", "123")
+                        .param("page","2")
+                        .param("size","5"))
+
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].nome", Matchers.is("Leonardo")))
                 .andExpect(jsonPath("$.content[0].sobrenome", Matchers.is("Castilho")))
@@ -92,11 +98,16 @@ public class ClienteControllerTest {
                 .andExpect(jsonPath("$.content[0].telefone", Matchers.is("44998240563")))
                 .andExpect(jsonPath("$.content[0].genero", Matchers.is("MASCULINO")))
                 .andExpect(jsonPath("$.content[0].endereco", Matchers.is(List.of())));
+
+        Mockito.verify(service,Mockito.times(1)).pesquisaDinamica("teste","123",pageable);
     }
 
     @Test
     public void deletarCliente_deveDeletarUsuarioERetornarNoContent() throws Exception{
         Long clienteId = 1L;
+
+        Mockito.doNothing().when(service).deletarCliente(clienteId);
+
         mockMvc.perform(delete("/api/clientes/{id}", clienteId)).andExpect(status().isNoContent());
         Mockito.verify(service, Mockito.times(1)).deletarCliente(1L);
     }
@@ -109,7 +120,6 @@ public class ClienteControllerTest {
         Mockito.when(service.editarCliente(clienteId,novoCliente)).thenReturn(cliente);
 
             mockMvc.perform(put("/api/clientes/{id}", 1L)
-                            .param("id",String.valueOf(clienteId))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(novoCliente)))
                         .andExpect(status().isOk())
