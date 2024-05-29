@@ -1,5 +1,6 @@
 package br.com.leonardo.bibliotecaspring.entity;
 
+import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,5 +28,7 @@ public class Livro {
     private LocalDate dataPublicacao;
     private int edicao;
 
+    @OneToOne(mappedBy = "livro", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Estoque estoque;
 
 }

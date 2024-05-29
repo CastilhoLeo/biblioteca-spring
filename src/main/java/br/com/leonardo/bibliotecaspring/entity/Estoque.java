@@ -1,32 +1,26 @@
 package br.com.leonardo.bibliotecaspring.entity;
 
+import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class Estoque {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
-    private Livro livro;
     private int quantidade;
+    private int estoqueInicial;
+    private SituacaoLivro situacaoLivro;
 
-    public Estoque(){
-    }
-    public Estoque(Long id, Livro livro, int quantidade) {
-        this.id = id;
-        this.livro = livro;
-        this.quantidade = quantidade;
-    }
-
-    public Livro getLivro() {
-        return livro;
-    }
-
-    public void setLivro(Livro livro) {
-        this.livro = livro;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "livro_id", nullable = false)
+    private Livro livro;
 }
