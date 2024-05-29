@@ -6,6 +6,7 @@ import br.com.leonardo.bibliotecaspring.builders.LivroDtoBuilder;
 import br.com.leonardo.bibliotecaspring.dto.LivroDTO;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
 import br.com.leonardo.bibliotecaspring.exception.ValidationException;
+import br.com.leonardo.bibliotecaspring.repository.EstoqueRepository;
 import br.com.leonardo.bibliotecaspring.repository.LivroRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,9 @@ public class LivroServiceTest {
 
     @Mock
     private LivroRepository repository;
+
+    @Mock
+    private EstoqueRepository estoqueRepository;
 
     @InjectMocks
     private LivroService service;

@@ -1,8 +1,7 @@
 package br.com.leonardo.bibliotecaspring.builders;
 
 import br.com.leonardo.bibliotecaspring.dto.LivroDTO;
-import br.com.leonardo.bibliotecaspring.entity.Cliente;
-import br.com.leonardo.bibliotecaspring.entity.Livro;
+import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
 
 import java.time.LocalDate;
 
@@ -13,6 +12,8 @@ public class LivroDtoBuilder {
     private String autor;
     private LocalDate dataPublicacao;
     private int edicao;
+    private SituacaoLivro situacaoLivro;
+    private int estoqueInicial;
 
     private LivroDtoBuilder(){
     }
@@ -23,6 +24,8 @@ public class LivroDtoBuilder {
         builder.autor = "J.K. Rowling";
         builder.dataPublicacao = LocalDate.of(1997, 6, 26);
         builder.edicao = 1;
+        builder.estoqueInicial = 10;
+        builder.situacaoLivro = SituacaoLivro.DISPONIVEL;
     }
 
     public static LivroDtoBuilder umLivro(){
@@ -32,7 +35,7 @@ public class LivroDtoBuilder {
     }
 
     public LivroDTO agora(){
-        return new LivroDTO(id,titulo,autor,dataPublicacao,edicao);
+        return new LivroDTO(id,titulo,autor,dataPublicacao,edicao, situacaoLivro, estoqueInicial);
     }
 
 
@@ -81,5 +84,19 @@ public class LivroDtoBuilder {
         return this;
     }
 
+    public SituacaoLivro getSituacaoLivro() {
+        return situacaoLivro;
+    }
 
+    public void comSituacaoLivro(SituacaoLivro situacaoLivro) {
+        this.situacaoLivro = situacaoLivro;
+    }
+
+    public int getEstoqueInicial() {
+        return estoqueInicial;
+    }
+
+    public void comEstoqueInicial(int estoqueInicial) {
+        this.estoqueInicial = estoqueInicial;
+    }
 }

@@ -1,5 +1,6 @@
 package br.com.leonardo.bibliotecaspring.dto;
 
+import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

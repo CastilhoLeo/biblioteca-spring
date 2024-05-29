@@ -2,6 +2,7 @@ package br.com.leonardo.bibliotecaspring.service;
 
 import br.com.leonardo.bibliotecaspring.converter.LivroConverter;
 import br.com.leonardo.bibliotecaspring.dto.LivroDTO;
+import br.com.leonardo.bibliotecaspring.entity.Estoque;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
 import br.com.leonardo.bibliotecaspring.exception.ValidationException;
 import br.com.leonardo.bibliotecaspring.repository.LivroRepository;
@@ -16,11 +17,18 @@ public class LivroService {
     @Autowired
     private LivroRepository repository;
 
+    @Autowired
+    private EstoqueService estoqueService;
+
     private LivroConverter livroConverter = new LivroConverter();
 
     public Livro cadastrarLivro(LivroDTO livroDTO){
         Livro livro = livroConverter.toEntity(livroDTO);
-        return repository.save(livro);
+        Estoque estoque = new Estoque();
+
+        Livro livroSalvo = repository.save(livro);
+        estoqueService.cadastrarEstoque(estoque, livro);
+        return livroSalvo;
     }
 
     public LivroDTO pesquisarPeloId(Long id){
