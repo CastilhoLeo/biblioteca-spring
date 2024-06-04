@@ -12,9 +12,10 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-@Transactional
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -46,4 +47,7 @@ public class Cliente {
 
     @Enumerated(EnumType.STRING)
     private Genero genero;
+
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Locacao> locacoes = new HashSet<>();
 }

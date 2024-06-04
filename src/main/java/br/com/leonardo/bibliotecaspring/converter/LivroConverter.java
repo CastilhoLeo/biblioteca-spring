@@ -14,6 +14,7 @@ public class LivroConverter {
         livroDTO.setAutor(livro.getAutor());
         livroDTO.setDataPublicacao(livro.getDataPublicacao());
         livroDTO.setEdicao(livro.getEdicao());
+        livroDTO.setEstoque(livro.getEstoque());
         return livroDTO;
     }
 
@@ -24,6 +25,7 @@ public class LivroConverter {
         livro.setTitulo(livroDTO.getTitulo());
         livro.setDataPublicacao(livroDTO.getDataPublicacao());
         livro.setEdicao(livroDTO.getEdicao());
+        livro.setEstoque(livroDTO.getEstoque());
         return livro;
     }
 }

@@ -1,5 +1,6 @@
 package br.com.leonardo.bibliotecaspring.dto;
 
+import br.com.leonardo.bibliotecaspring.entity.Estoque;
 import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,4 +18,5 @@ public class LivroDTO {
     private String autor;
     private LocalDate dataPublicacao;
     private int edicao;
+    private Estoque estoque;
 }
