@@ -1,7 +1,9 @@
 package br.com.leonardo.bibliotecaspring.entity;
 
 import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,11 +18,17 @@ public class Estoque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
-    private int quantidade;
+    @Min(value = 0, message = "O estoque ficará negativo!")
+    private int estoqueAtual;
+
     private int estoqueInicial;
+
+    @Enumerated(EnumType.STRING)
     private SituacaoLivro situacaoLivro;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "livro_id", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "livro_id")
+    @JsonBackReference
     private Livro livro;
+
 }

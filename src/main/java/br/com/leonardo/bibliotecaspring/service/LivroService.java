@@ -17,19 +17,17 @@ public class LivroService {
     @Autowired
     private LivroRepository repository;
 
-    @Autowired
-    private EstoqueService estoqueService;
 
     private LivroConverter livroConverter = new LivroConverter();
 
     public Livro cadastrarLivro(LivroDTO livroDTO){
         Livro livro = livroConverter.toEntity(livroDTO);
         Estoque estoque = new Estoque();
-
-        Livro livroSalvo = repository.save(livro);
-        estoqueService.cadastrarEstoque(estoque, livro);
-        return livroSalvo;
+        livro.setEstoque(estoque);
+        estoque.setLivro(livro);
+        return repository.save(livro);
     }
+
 
     public LivroDTO pesquisarPeloId(Long id){
        LivroDTO livro = livroConverter.toDto(repository.findById(id).orElseThrow(()->new ValidationException("Livro não encontrado")));
