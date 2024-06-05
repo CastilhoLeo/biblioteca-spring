@@ -2,7 +2,7 @@ package br.com.leonardo.bibliotecaspring.enums;
 
 public enum SituacaoLivro {
 
-    ALUGADO ("Alugado"),
+    SEM_ESTOQUE ("Sem estoque"),
     DISPONIVEL("Disponivel");
 
     private String situacaoLivro;

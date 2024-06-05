@@ -46,7 +46,7 @@ public class EstoqueService {
 
         estoque.setEstoqueAtual(estoque.getEstoqueAtual()-1);
 
-        estoqueRepository.save(estoque);;
+        estoqueRepository.save(estoque);
 
     }
 
@@ -58,6 +58,15 @@ public class EstoqueService {
         }else{
             estoque.setSituacaoLivro(SituacaoLivro.SEM_ESTOQUE);
         }
+        estoqueRepository.save(estoque);
+    }
+
+    public void retornoEstoque(Livro livro){
+        Estoque estoque = estoqueRepository.findById(livro.getEstoque().getId())
+                .orElseThrow(()-> new ValidationException("Livro nao encontrado!"));
+
+        estoque.setEstoqueAtual(estoque.getEstoqueAtual()+1);
+
         estoqueRepository.save(estoque);
     }
 
