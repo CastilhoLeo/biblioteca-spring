@@ -35,11 +35,12 @@ public class Livro {
 
     private int edicao;
 
-    @OneToOne(mappedBy = "livro", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToOne(mappedBy = "livro", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonManagedReference
     private Estoque estoque;
-
-    @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Locacao> locacoes = new HashSet<>();
 
 }

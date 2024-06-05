@@ -1,6 +1,9 @@
 package br.com.leonardo.bibliotecaspring.entity;
 
 import br.com.leonardo.bibliotecaspring.enums.Genero;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -48,6 +51,7 @@ public class Cliente {
     @Enumerated(EnumType.STRING)
     private Genero genero;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Locacao> locacoes = new HashSet<>();
 }

@@ -1,54 +1,48 @@
 package br.com.leonardo.bibliotecaspring.entity;
 
+import br.com.leonardo.bibliotecaspring.enums.PrazoLocacao;
 import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
+@Table(name = "locacao")
 public class Locacao {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "livro_id")
     private Livro livro;
-    private SituacaoLivro situacaoLivro;
 
-    public Locacao(){
-    }
-    public Locacao(Long id, Cliente cliente, Livro livro, SituacaoLivro situacaoLivro) {
-        this.id = id;
-        this.cliente = cliente;
-        this.livro = livro;
-        this.situacaoLivro = situacaoLivro;
-    }
+    @Enumerated(EnumType.STRING)
+    private PrazoLocacao prazoLocacao;
 
-    public Long getId() {
-        return id;
-    }
+    @Temporal(TemporalType.DATE)
+    private LocalDate dataSaida;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Temporal(TemporalType.DATE)
+    private LocalDate dataPrevistaDevolucao;
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Livro getLivro() {
-        return livro;
-    }
-
-    public void setLivro(Livro livro) {
-        this.livro = livro;
-    }
-
-    public SituacaoLivro getSituacaoLivro() {
-        return situacaoLivro;
-    }
-
-    public void setSituacaoLivro(SituacaoLivro situacaoLivro) {
-        this.situacaoLivro = situacaoLivro;
-    }
+    @Temporal(TemporalType.DATE)
+    private LocalDate dataEfetivaDevolucao;
 
 
 }
