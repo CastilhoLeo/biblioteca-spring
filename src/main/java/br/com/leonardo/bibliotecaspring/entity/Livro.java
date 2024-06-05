@@ -36,7 +36,6 @@ public class Livro {
     private int edicao;
 
     @OneToOne(mappedBy = "livro", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonManagedReference
     private Estoque estoque;
     
     @JsonIgnore
