@@ -49,9 +49,15 @@ public class LocacaoService {
     @Transactional
     public Locacao devolverLocacao(Long id){
         Locacao locacao = locacaoRepository.findById(id).orElseThrow(()->new ValidationException("Locacao nao localizada"));
-        estoqueService.retornoEstoque(locacao.getLivro());
-        locacao.setDataEfetivaDevolucao(LocalDate.now());
-        estoqueService.verificarDisponibilidade(id);
+
+        if (locacao.getDataEfetivaDevolucao() == null) {
+            estoqueService.retornoEstoque(locacao.getLivro());
+            locacao.setDataEfetivaDevolucao(LocalDate.now());
+            estoqueService.verificarDisponibilidade(id);
+        }
+        else{
+            throw new ValidationException("Este livro já foi devolvido");
+        }
 
         return locacao;
     }
