@@ -23,20 +23,21 @@ public class EstoqueService {
 
     @Transactional
     public Estoque inserirEstoqueInicial(Long id, Estoque estoqueAtualizado){
+
         if(estoqueAtualizado.getEstoqueInicial()<0){
             throw new ValidationException("O estoque não pode ser negativo");
         }
         
         Estoque estoque = estoqueRepository.findById(id).orElseThrow(()->new ValidationException("Livro nao encontrado!"));
-        estoque.setEstoqueInicial(estoqueAtualizado.getEstoqueInicial());
-        estoque.setEstoqueAtual(estoqueAtualizado.getEstoqueInicial());
-
-        if(estoqueAtualizado.getEstoqueInicial()>0){
-            estoque.setSituacaoLivro(SituacaoLivro.DISPONIVEL);
+        if(estoque.getEstoqueInicial() <=0) {
+            estoque.setEstoqueInicial(estoqueAtualizado.getEstoqueInicial());
+            estoque.setEstoqueAtual(estoqueAtualizado.getEstoqueInicial());
+            verificarDisponibilidade(id);
+            return estoque;
         }else{
-            estoque.setSituacaoLivro(SituacaoLivro.SEM_ESTOQUE);
+            throw new ValidationException("O estoque inicial para este livro ja foi inserido!");
         }
-        return estoque;
+
     }
 
     @Transactional
