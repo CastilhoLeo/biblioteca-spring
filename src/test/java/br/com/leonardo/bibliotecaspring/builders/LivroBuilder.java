@@ -3,9 +3,12 @@ package br.com.leonardo.bibliotecaspring.builders;
 import br.com.leonardo.bibliotecaspring.entity.Cliente;
 import br.com.leonardo.bibliotecaspring.entity.Estoque;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
+import br.com.leonardo.bibliotecaspring.entity.Locacao;
 import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class LivroBuilder {
 
@@ -14,9 +17,8 @@ public class LivroBuilder {
     private String autor;
     private LocalDate dataPublicacao;
     private int edicao;
-    private SituacaoLivro situacaoLivro;
-    private int estoqueInicial;
     private Estoque estoque;
+    private Set<Locacao> locacoes = new HashSet<Locacao>();
 
     private LivroBuilder(){
     }
@@ -27,9 +29,9 @@ public class LivroBuilder {
         builder.autor = "J.K. Rowling";
         builder.dataPublicacao = LocalDate.of(1997, 6, 26);
         builder.edicao = 1;
-        builder.situacaoLivro = SituacaoLivro.DISPONIVEL;
-        builder.estoqueInicial = 10;
         builder.estoque = new Estoque();
+        builder.locacoes = new HashSet<Locacao>();
+
     }
 
     public static LivroBuilder umLivro(){
@@ -39,12 +41,20 @@ public class LivroBuilder {
     }
 
     public Livro agora(){
-        return new Livro(id,titulo,autor,dataPublicacao,edicao, situacaoLivro, estoqueInicial,estoque);
+        return new Livro(id,titulo,autor,dataPublicacao,edicao, estoque,locacoes);
     }
 
 
     public Long getId() {
         return id;
+    }
+
+    public Set<Locacao> getLocacoes() {
+        return locacoes;
+    }
+
+    public void comLocacoes(Set<Locacao> locacoes) {
+        this.locacoes = locacoes;
     }
 
     public LivroBuilder comId(Long id) {
@@ -85,24 +95,6 @@ public class LivroBuilder {
 
     public LivroBuilder comEdicao(int edicao) {
         this.edicao = edicao;
-        return this;
-    }
-
-    public int getEstoqueInicial() {
-        return estoqueInicial;
-    }
-
-    public LivroBuilder comEstoqueInicial(int estoqueInicial) {
-        this.estoqueInicial = estoqueInicial;
-        return this;
-    }
-
-    public SituacaoLivro getSituacaoLivro() {
-        return situacaoLivro;
-    }
-
-    public LivroBuilder comSituacaoLivro(SituacaoLivro situacaoLivro) {
-        this.situacaoLivro = situacaoLivro;
         return this;
     }
 

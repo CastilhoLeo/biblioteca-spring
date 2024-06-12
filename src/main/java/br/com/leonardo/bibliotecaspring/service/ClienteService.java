@@ -24,8 +24,8 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-
-    private ClienteConverter clienteConverter = new ClienteConverter();
+    @Autowired
+    private ClienteConverter clienteConverter;
 
    public ClienteDTO localizarPeloId(Long id){
        ClienteDTO clienteDto = this.clienteConverter.toDto(this.clienteRepository.findById(id)
@@ -37,6 +37,7 @@ public class ClienteService {
 
     public Cliente cadastrarCliente(ClienteDTO clienteDTO){
        Cliente cliente = this.clienteConverter.toEntity(clienteDTO);
+       cliente.getEndereco().forEach(endereco-> endereco.setCliente(cliente));
        return this.clienteRepository.save(cliente);
     }
 

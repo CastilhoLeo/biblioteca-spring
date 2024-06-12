@@ -2,10 +2,13 @@ package br.com.leonardo.bibliotecaspring.builders;
 
 import br.com.leonardo.bibliotecaspring.entity.Cliente;
 import br.com.leonardo.bibliotecaspring.entity.Endereco;
+import br.com.leonardo.bibliotecaspring.entity.Locacao;
 import br.com.leonardo.bibliotecaspring.enums.Genero;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ClienteBuilder {
 
@@ -17,6 +20,7 @@ public class ClienteBuilder {
     private String cpf;
     private String telefone;
     private Genero genero;
+    private Set<Locacao> locacao = new HashSet<Locacao>();
 
     private ClienteBuilder(){
     }
@@ -30,6 +34,7 @@ public class ClienteBuilder {
         builder.cpf = "41861297890";
         builder.telefone = "44998240563";
         builder.genero = Genero.MASCULINO;
+        builder.locacao = new HashSet<Locacao>();
     }
     public static ClienteBuilder umCliente(){
         ClienteBuilder builder = new ClienteBuilder();
@@ -38,7 +43,7 @@ public class ClienteBuilder {
     }
 
     public Cliente agora(){
-        return new Cliente(id,nome,sobrenome,dataNascimento,endereco,cpf,telefone,genero);
+        return new Cliente(id,nome,sobrenome,dataNascimento,endereco,cpf,telefone,genero,locacao);
     }
 
     public Long getId() {
@@ -70,6 +75,14 @@ public class ClienteBuilder {
 
     public LocalDate getDataNascimento() {
         return dataNascimento;
+    }
+
+    public Set<Locacao> getLocacao() {
+        return locacao;
+    }
+
+    public void comLocacao(Set<Locacao> locacao) {
+        this.locacao = locacao;
     }
 
     public ClienteBuilder comDataNascimento(LocalDate dataNascimento) {
