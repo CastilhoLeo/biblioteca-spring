@@ -33,7 +33,6 @@ public class ClienteController {
                 @RequestParam(value = "cpf", required = false) String cpf, Pageable pageable){
             return ok().body(this.clienteService.pesquisaDinamica(nome, cpf, pageable));
     }
-
     @PostMapping("/cadastro")
     public ResponseEntity<Cliente> cadastrarCliente( @RequestBody ClienteDTO clienteDTO ){
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.cadastrarCliente(clienteDTO));

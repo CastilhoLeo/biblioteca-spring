@@ -1,5 +1,6 @@
 package br.com.leonardo.bibliotecaspring.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -23,14 +24,21 @@ public class Endereco {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (nullable = false)
     private Long id;
+
     private String rua;
+
     private String numero;
+
     @Length(min = 8, max = 8, message = "Este CEP é inválido!")
     private String cep;
+
     private String complemento;
+
     private String bairro;
+
     @ManyToOne
     @JoinColumn (name = "cliente_id")
+    @JsonIgnore
     private Cliente cliente;
 
 }

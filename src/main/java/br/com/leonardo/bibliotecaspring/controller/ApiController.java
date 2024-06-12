@@ -8,6 +8,6 @@ public class ApiController {
 
     @RequestMapping("/api")
     public String inicial(){
-        return "cadastro.html";
+        return "index.html";
     }
 }

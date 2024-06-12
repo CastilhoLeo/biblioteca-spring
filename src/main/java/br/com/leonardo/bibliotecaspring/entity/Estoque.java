@@ -1,7 +1,6 @@
 package br.com.leonardo.bibliotecaspring.entity;
 
 import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
