@@ -22,9 +22,10 @@ public class ClienteDTO {
     private String nome;
     private String sobrenome;
     private LocalDate dataNascimento;
-    private List<Endereco> endereco = new ArrayList<Endereco>();
+    private List<EnderecoDTO> endereco = new ArrayList<>();
     private String cpf;
     private String telefone;
     private Genero genero;
 
 }
+

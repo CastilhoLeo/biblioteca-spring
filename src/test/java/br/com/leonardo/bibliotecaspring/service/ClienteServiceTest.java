@@ -2,7 +2,6 @@ package br.com.leonardo.bibliotecaspring.service;
 
 import br.com.leonardo.bibliotecaspring.builders.ClienteBuilder;
 import br.com.leonardo.bibliotecaspring.builders.ClienteDtoBuilder;
-import br.com.leonardo.bibliotecaspring.converter.ClienteConverter;
 import br.com.leonardo.bibliotecaspring.dto.ClienteDTO;
 import br.com.leonardo.bibliotecaspring.entity.Cliente;
 import br.com.leonardo.bibliotecaspring.exception.ValidationException;
@@ -14,8 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -41,7 +38,7 @@ public class ClienteServiceTest {
 
     @Test
     public void localizarPeloId_DeveRetornarUmUsuario(){
-        Cliente cliente = ClienteBuilder.umCliente().agora();
+        Cliente cliente = ClienteBuilder.cliente01().build();
         ClienteDTO clienteDTO = ClienteDtoBuilder.umCliente().agora();
         Mockito.when(repository.findById(cliente.getId())).thenReturn(Optional.of(cliente));
         ClienteDTO resultado = service.localizarPeloId(cliente.getId());
@@ -49,6 +46,7 @@ public class ClienteServiceTest {
 
         assertNotNull(resultado);
         assertEquals(ClienteDTO.class, resultado.getClass());
+
     }
 
     @Test
@@ -62,7 +60,8 @@ public class ClienteServiceTest {
 
     @Test
     public void cadastrarCliente_DeveSalvarUmCLiente(){
-        Cliente cliente = ClienteBuilder.umCliente().agora();
+        Cliente cliente = ClienteBuilder.cliente01()
+                 .comNome("").build();
         ClienteDTO clienteDTO = ClienteDtoBuilder.umCliente().agora();
         Mockito.when(repository.save(any(Cliente.class))).thenReturn(cliente);
 
@@ -75,7 +74,7 @@ public class ClienteServiceTest {
 
     @Test
     public void deletarCliente_deveDeletarClientePeloIdInformado(){
-        Cliente cliente = ClienteBuilder.umCliente().agora();
+        Cliente cliente = ClienteBuilder.cliente01().build();
         service.deletarCliente(cliente.getId());
 
         Mockito.verify(repository, times(1)).deleteById(1L);
@@ -83,7 +82,7 @@ public class ClienteServiceTest {
 
     @Test
     public void editarCliente_DeveRetornarDadosAlterados(){
-        Cliente cliente = ClienteBuilder.umCliente().agora();
+        Cliente cliente = ClienteBuilder.cliente01().build();
         ClienteDTO novoCliente = ClienteDtoBuilder.umCliente().comNome("Joao").agora();
         Mockito.when(repository.findById(1L)).thenReturn(Optional.of(cliente));
         Mockito.when(repository.save(any())).thenReturn(cliente);
@@ -96,7 +95,7 @@ public class ClienteServiceTest {
 
     @Test
     public void editarCliente_DeveRetornarErroPorIdNaoLocalizado(){
-        Cliente cliente = ClienteBuilder.umCliente().agora();
+        Cliente cliente = ClienteBuilder.cliente01().build();
         ClienteDTO novoCliente = ClienteDtoBuilder.umCliente().comNome("Joao").agora();
         Mockito.when(repository.findById(1L)).thenReturn(Optional.empty());
 
@@ -111,9 +110,9 @@ public class ClienteServiceTest {
         Pageable pageable = PageRequest.of(0, 10);
 
         List<Cliente> lista = new ArrayList<>();
-        lista.add(ClienteBuilder.umCliente().agora());
-        lista.add(ClienteBuilder.umCliente().comId(2L).comNome("Maria").agora());
-        lista.add(ClienteBuilder.umCliente().comId(3L).comNome("Joao").agora());
+        lista.add(ClienteBuilder.cliente01().build());
+        lista.add(ClienteBuilder.cliente01().comId(2L).comNome("Maria").build());
+        lista.add(ClienteBuilder.cliente01().comId(3L).comNome("Joao").build());
 
         Page<Cliente> page = new PageImpl<>(lista);
         Mockito.when(repository.findAll(any(Pageable.class))).thenReturn((page));
@@ -132,7 +131,7 @@ public class ClienteServiceTest {
         Pageable pageable = PageRequest.of(0, 10);
 
         List<Cliente> lista = new ArrayList<>();
-        lista.add(ClienteBuilder.umCliente().agora());
+        lista.add(ClienteBuilder.cliente01().build());
 
         Page<Cliente> page = new PageImpl<>(lista);
         Mockito.when(repository.pesquisaDinamica(anyString(),anyString(),any(Pageable.class))).thenReturn(page);

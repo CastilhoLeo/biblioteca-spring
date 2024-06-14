@@ -26,7 +26,7 @@ public class LivroController {
     }
 
     @PostMapping("/cadastro")
-    public ResponseEntity<Livro> cadastrarLivro(@RequestBody LivroDTO livro){
+    public ResponseEntity<LivroDTO> cadastrarLivro(@RequestBody LivroDTO livro){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrarLivro(livro));
     }
 
@@ -38,7 +38,10 @@ public class LivroController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Livro> editarCliente(@PathVariable Long id, @RequestBody LivroDTO clienteEditado){
-       return ResponseEntity.accepted().body(service.editarLivro(id, clienteEditado));
+
+
+        return ResponseEntity.accepted().body(service.editarLivro(id, clienteEditado));
+
     }
 
     @GetMapping("")

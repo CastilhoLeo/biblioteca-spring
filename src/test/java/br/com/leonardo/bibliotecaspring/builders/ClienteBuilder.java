@@ -36,13 +36,13 @@ public class ClienteBuilder {
         builder.genero = Genero.MASCULINO;
         builder.locacao = new HashSet<Locacao>();
     }
-    public static ClienteBuilder umCliente(){
+    public static ClienteBuilder cliente01(){
         ClienteBuilder builder = new ClienteBuilder();
         inicializarDadosPadroes(builder);
         return builder;
     }
 
-    public Cliente agora(){
+    public Cliente build(){
         return new Cliente(id,nome,sobrenome,dataNascimento,endereco,cpf,telefone,genero,locacao);
     }
 

@@ -17,15 +17,17 @@ public class LivroService {
     @Autowired
     private LivroRepository repository;
 
+    @Autowired
+    private LivroConverter livroConverter;
 
-    private LivroConverter livroConverter = new LivroConverter();
-
-    public Livro cadastrarLivro(LivroDTO livroDTO){
+    public LivroDTO cadastrarLivro(LivroDTO livroDTO){
         Livro livro = livroConverter.toEntity(livroDTO);
+
         Estoque estoque = new Estoque();
         livro.setEstoque(estoque);
         estoque.setLivro(livro);
-        return repository.save(livro);
+        LivroDTO livroDto = livroConverter.toDto(repository.save(livro));
+        return livroDto;
     }
 
 

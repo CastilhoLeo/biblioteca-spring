@@ -8,8 +8,6 @@ import br.com.leonardo.bibliotecaspring.service.ClienteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -114,7 +112,7 @@ public class ClienteControllerTest {
 
     @Test
     public void editarCliente_DeveRetornarClienteEditado() throws Exception{
-        Cliente cliente = ClienteBuilder.umCliente().comNome("Roberto").agora();
+        Cliente cliente = ClienteBuilder.cliente01().comNome("Roberto").build();
         Long clienteId = 1L;
         ClienteDTO novoCliente = ClienteDtoBuilder.umCliente().comNome("Roberto").agora();
         Mockito.when(service.editarCliente(clienteId,novoCliente)).thenReturn(cliente);

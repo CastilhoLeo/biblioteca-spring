@@ -50,8 +50,7 @@ public class Cliente {
 
     @Enumerated(EnumType.STRING)
     private Genero genero;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Locacao> locacoes = new HashSet<>();
 }

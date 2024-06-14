@@ -18,5 +18,4 @@ public class LivroDTO {
     private String autor;
     private LocalDate dataPublicacao;
     private int edicao;
-    private Estoque estoque;
 }
