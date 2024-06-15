@@ -1,6 +1,7 @@
 package br.com.leonardo.bibliotecaspring.service;
 
 import br.com.leonardo.bibliotecaspring.converter.ClienteConverter;
+import br.com.leonardo.bibliotecaspring.converter.EnderecoConverter;
 import br.com.leonardo.bibliotecaspring.dto.ClienteDTO;
 import br.com.leonardo.bibliotecaspring.entity.Cliente;
 import br.com.leonardo.bibliotecaspring.exception.ValidationException;
@@ -27,6 +28,9 @@ public class ClienteService {
     @Autowired
     private ClienteConverter clienteConverter;
 
+    @Autowired
+    private EnderecoConverter enderecoConverter;
+
    public ClienteDTO localizarPeloId(Long id){
        ClienteDTO clienteDto = this.clienteConverter.toDto(this.clienteRepository.findById(id)
                .orElseThrow(()-> new ValidationException("Id não localizado!")));
@@ -46,13 +50,14 @@ public class ClienteService {
     }
 
     public Cliente editarCliente(Long id, ClienteDTO novoCliente){
+            Cliente novoCliente2 = clienteConverter.toEntity(novoCliente);
            Cliente cliente = clienteRepository.findById(id).orElseThrow(()-> new ValidationException("Cliente nao encontrado"));
-           cliente.setCpf(novoCliente.getCpf());
-           cliente.setNome(novoCliente.getNome());
-           cliente.setGenero(novoCliente.getGenero());
-           cliente.setEndereco(novoCliente.getEndereco());
-           cliente.setTelefone(novoCliente.getTelefone());
-           cliente.setDataNascimento(novoCliente.getDataNascimento());
+           cliente.setCpf(novoCliente2.getCpf());
+           cliente.setNome(novoCliente2.getNome());
+           cliente.setGenero(novoCliente2.getGenero());
+           cliente.setEndereco(novoCliente2.getEndereco());
+           cliente.setTelefone(novoCliente2.getTelefone());
+           cliente.setDataNascimento(novoCliente2.getDataNascimento());
            return clienteRepository.save(cliente);
     }
 

@@ -28,9 +28,9 @@ public class ClienteRepositoryTest {
     @BeforeAll
     public static void setup(@Autowired ClienteRepository clienteRepository){
         clienteRepository.saveAll(List.of(
-                ClienteBuilder.umCliente().comId(1L).agora(),
-                ClienteBuilder.umCliente().comId(2L).comNome("Joao").comCpf("23852633001").agora(),
-                ClienteBuilder.umCliente().comId(3L).comNome("Maria").comCpf("41126661015").agora()
+                ClienteBuilder.cliente01().comId(1L).build(),
+                ClienteBuilder.cliente01().comId(2L).comNome("Joao").comCpf("23852633001").build(),
+                ClienteBuilder.cliente01().comId(3L).comNome("Maria").comCpf("41126661015").build()
         ));
     }
 

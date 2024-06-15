@@ -1,5 +1,7 @@
 package br.com.leonardo.bibliotecaspring.controller;
 
+import br.com.leonardo.bibliotecaspring.dto.LocacaoDTO;
+import br.com.leonardo.bibliotecaspring.dto.SalvarLocacaoRequest;
 import br.com.leonardo.bibliotecaspring.entity.Locacao;
 import br.com.leonardo.bibliotecaspring.service.LocacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,12 @@ public class LocacaoController {
     private LocacaoService locacaoService;
 
     @PostMapping("/cadastro")
-    public ResponseEntity<Locacao> cadastrarLocacao(@RequestBody Locacao locacao){
-        return ResponseEntity.ok().body(locacaoService.salvarLocacao(locacao));
+    public ResponseEntity<LocacaoDTO> cadastrarLocacao(@RequestBody SalvarLocacaoRequest locacaoRequest){
+        return ResponseEntity.ok().body(locacaoService.salvarLocacao(locacaoRequest));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Locacao> devolverLocacao(@PathVariable Long id){
+    public ResponseEntity<LocacaoDTO> devolverLocacao(@PathVariable Long id){
         return ResponseEntity.ok().body(locacaoService.devolverLocacao(id));
     }
 }

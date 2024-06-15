@@ -1,6 +1,7 @@
 package br.com.leonardo.bibliotecaspring.builders;
 
 import br.com.leonardo.bibliotecaspring.dto.ClienteDTO;
+import br.com.leonardo.bibliotecaspring.dto.EnderecoDTO;
 import br.com.leonardo.bibliotecaspring.entity.Cliente;
 import br.com.leonardo.bibliotecaspring.entity.Endereco;
 import br.com.leonardo.bibliotecaspring.enums.Genero;
@@ -14,7 +15,7 @@ public class ClienteDtoBuilder {
     private String nome;
     private String sobrenome;
     private LocalDate dataNascimento;
-    private List<Endereco> endereco = new ArrayList<>();
+    private List<EnderecoDTO> endereco = new ArrayList<>();
     private String cpf;
     private String telefone;
     private Genero genero;
@@ -26,7 +27,7 @@ public class ClienteDtoBuilder {
         builder.nome = "Leonardo";
         builder.sobrenome = "Castilho";
         builder.dataNascimento = LocalDate.of(1992,11,13);
-        builder.endereco = new ArrayList<Endereco>();
+        builder.endereco = new ArrayList<EnderecoDTO>();
         builder.cpf = "41861297890";
         builder.telefone = "44998240563";
         builder.genero = Genero.MASCULINO;
@@ -77,11 +78,11 @@ public class ClienteDtoBuilder {
         return this;
     }
 
-    public List<Endereco> getEndereco() {
+    public List<EnderecoDTO> getEndereco() {
         return endereco;
     }
 
-    public ClienteDtoBuilder comEndereco(List<Endereco> endereco) {
+    public ClienteDtoBuilder comEndereco(List<EnderecoDTO> endereco) {
         this.endereco = endereco;
         return this;
     }

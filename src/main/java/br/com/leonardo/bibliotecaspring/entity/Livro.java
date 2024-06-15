@@ -34,10 +34,9 @@ public class Livro {
 
     private int edicao;
 
-    @OneToOne(mappedBy = "livro", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "livro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Estoque estoque;
     
-    @JsonIgnore
     @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Locacao> locacoes = new HashSet<>();
 
