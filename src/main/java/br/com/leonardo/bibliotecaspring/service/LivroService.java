@@ -1,7 +1,10 @@
 package br.com.leonardo.bibliotecaspring.service;
 
+import br.com.leonardo.bibliotecaspring.converter.EstoqueConverter;
 import br.com.leonardo.bibliotecaspring.converter.LivroConverter;
+import br.com.leonardo.bibliotecaspring.dto.EstoqueDTO;
 import br.com.leonardo.bibliotecaspring.dto.LivroDTO;
+import br.com.leonardo.bibliotecaspring.dto.CadastroLivroRequest;
 import br.com.leonardo.bibliotecaspring.entity.Estoque;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
 import br.com.leonardo.bibliotecaspring.exception.ValidationException;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LivroService {
@@ -20,13 +24,25 @@ public class LivroService {
     @Autowired
     private LivroConverter livroConverter;
 
-    public LivroDTO cadastrarLivro(LivroDTO livroDTO){
-        Livro livro = livroConverter.toEntity(livroDTO);
+    @Autowired
+    private EstoqueService estoqueService;
 
-        Estoque estoque = new Estoque();
-        livro.setEstoque(estoque);
-        estoque.setLivro(livro);
+
+    @Transactional
+    public LivroDTO cadastrarLivro(CadastroLivroRequest livroRequest){
+
+       LivroDTO livroDTO = livroRequest.getLivroDto();
+       int estoqueInicial = livroRequest.getEstoqueInicial();
+
+        EstoqueDTO estoqueDto = new EstoqueDTO();
+        livroDTO.setEstoqueDto(estoqueDto);
+
+        Livro livro = livroConverter.toEntity(livroDTO);
+        livro.getEstoque().setLivro(livro);
+
         LivroDTO livroDto = livroConverter.toDto(repository.save(livro));
+        estoqueService.inserirEstoqueInicial(livro.getId(), estoqueInicial);
+
         return livroDto;
     }
 

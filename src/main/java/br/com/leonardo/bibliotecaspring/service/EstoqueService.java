@@ -1,11 +1,13 @@
 package br.com.leonardo.bibliotecaspring.service;
 
+import br.com.leonardo.bibliotecaspring.converter.LivroConverter;
 import br.com.leonardo.bibliotecaspring.dto.LivroDTO;
 import br.com.leonardo.bibliotecaspring.entity.Estoque;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
 import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
 import br.com.leonardo.bibliotecaspring.exception.ValidationException;
 import br.com.leonardo.bibliotecaspring.repository.EstoqueRepository;
+import br.com.leonardo.bibliotecaspring.repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,20 +20,24 @@ public class EstoqueService {
     @Autowired
     private EstoqueRepository estoqueRepository;
 
+
     @Autowired
-    private LivroService livroService;
+    private LivroRepository livroRepository;
 
     @Transactional
-    public Estoque inserirEstoqueInicial(Long id, Estoque estoqueAtualizado){
+    public Estoque inserirEstoqueInicial(Long id, int estoqueInicial){
 
-        if(estoqueAtualizado.getEstoqueInicial()<0){
+        Livro livro = livroRepository.findById(id).orElseThrow(()-> new ValidationException("Livro não encontrado"));
+
+        Estoque estoque = livro.getEstoque();
+
+        if(estoqueInicial<0){
             throw new ValidationException("O estoque não pode ser negativo");
         }
         
-        Estoque estoque = estoqueRepository.findById(id).orElseThrow(()->new ValidationException("Livro nao encontrado!"));
-        if(estoque.getEstoqueInicial() <=0) {
-            estoque.setEstoqueInicial(estoqueAtualizado.getEstoqueInicial());
-            estoque.setEstoqueAtual(estoqueAtualizado.getEstoqueInicial());
+        if(estoque.getEstoqueInicial() == 0) {
+            estoque.setEstoqueInicial((estoqueInicial));
+            estoque.setEstoqueAtual(estoque.getEstoqueInicial());
             verificarDisponibilidade(id);
             return estoque;
         }else{

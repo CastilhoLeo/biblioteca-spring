@@ -19,8 +19,5 @@ public class EstoqueController {
     @Autowired
     private EstoqueService estoqueService;
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Estoque> lancarEstoqueInicial(@PathVariable Long id, @RequestBody Estoque estoque){
-        return ok().body(this.estoqueService.inserirEstoqueInicial(id, estoque));
-    }
+
 }

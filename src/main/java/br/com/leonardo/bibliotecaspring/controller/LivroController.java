@@ -1,8 +1,7 @@
 package br.com.leonardo.bibliotecaspring.controller;
 
-import br.com.leonardo.bibliotecaspring.dto.ClienteDTO;
 import br.com.leonardo.bibliotecaspring.dto.LivroDTO;
-import br.com.leonardo.bibliotecaspring.entity.Cliente;
+import br.com.leonardo.bibliotecaspring.dto.CadastroLivroRequest;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
 import br.com.leonardo.bibliotecaspring.service.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,8 +24,8 @@ public class LivroController {
     }
 
     @PostMapping("/cadastro")
-    public ResponseEntity<LivroDTO> cadastrarLivro(@RequestBody LivroDTO livro){
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrarLivro(livro));
+    public ResponseEntity<LivroDTO> cadastrarLivro(@RequestBody CadastroLivroRequest livroRequest){
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrarLivro(livroRequest));
     }
 
     @DeleteMapping("/{id}")

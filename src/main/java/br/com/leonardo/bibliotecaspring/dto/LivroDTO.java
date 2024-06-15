@@ -5,9 +5,11 @@ import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Component
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,4 +20,5 @@ public class LivroDTO {
     private String autor;
     private LocalDate dataPublicacao;
     private int edicao;
+    private EstoqueDTO estoqueDto;
 }
