@@ -28,7 +28,7 @@ public class ClienteConverterTest {
         Endereco endereco2 = new Endereco(1l, "Olimpio Mendes da Rocha","355", "87023015", "ap 8010", "teste", new Cliente());
         endereco.add(endereco2);
 
-        Cliente cliente = ClienteBuilder.cliente01().comEndereco(endereco).build();
+        Cliente cliente = ClienteBuilder.cliente().comEndereco(endereco).build();
 
         ClienteDTO clienteDTO = clienteConverter.toDto(cliente);
 
@@ -41,7 +41,7 @@ public class ClienteConverterTest {
     @Test
     public void toEntity_DevePassarUmDtoParaUmEntity(){
 
-        Cliente cliente = ClienteBuilder.cliente01().build();
+        Cliente cliente = ClienteBuilder.cliente().build();
         ClienteDTO clienteDTO = ClienteDtoBuilder.umCliente().agora();
 
         Cliente clienteResultado = clienteConverter.toEntity(clienteDTO);

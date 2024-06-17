@@ -4,6 +4,7 @@ import br.com.leonardo.bibliotecaspring.converter.ClienteConverter;
 import br.com.leonardo.bibliotecaspring.converter.EnderecoConverter;
 import br.com.leonardo.bibliotecaspring.dto.ClienteDTO;
 import br.com.leonardo.bibliotecaspring.entity.Cliente;
+import br.com.leonardo.bibliotecaspring.exception.ClienteNaoEncontradoException;
 import br.com.leonardo.bibliotecaspring.exception.ValidationException;
 import br.com.leonardo.bibliotecaspring.repository.ClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -33,7 +34,7 @@ public class ClienteService {
 
    public ClienteDTO localizarPeloId(Long id){
        ClienteDTO clienteDto = this.clienteConverter.toDto(this.clienteRepository.findById(id)
-               .orElseThrow(()-> new ValidationException("Id não localizado!")));
+               .orElseThrow(()-> new ClienteNaoEncontradoException()));
 
        return clienteDto;
         }
@@ -51,7 +52,7 @@ public class ClienteService {
 
     public Cliente editarCliente(Long id, ClienteDTO novoCliente){
             Cliente novoCliente2 = clienteConverter.toEntity(novoCliente);
-           Cliente cliente = clienteRepository.findById(id).orElseThrow(()-> new ValidationException("Cliente nao encontrado"));
+           Cliente cliente = clienteRepository.findById(id).orElseThrow(()-> new ClienteNaoEncontradoException());
            cliente.setCpf(novoCliente2.getCpf());
            cliente.setNome(novoCliente2.getNome());
            cliente.setGenero(novoCliente2.getGenero());

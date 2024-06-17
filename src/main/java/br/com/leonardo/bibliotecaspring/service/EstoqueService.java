@@ -5,6 +5,9 @@ import br.com.leonardo.bibliotecaspring.dto.LivroDTO;
 import br.com.leonardo.bibliotecaspring.entity.Estoque;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
 import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
+import br.com.leonardo.bibliotecaspring.exception.EstoqueJaInseridoException;
+import br.com.leonardo.bibliotecaspring.exception.EstoqueNegativoException;
+import br.com.leonardo.bibliotecaspring.exception.LivroNaoEncontradoException;
 import br.com.leonardo.bibliotecaspring.exception.ValidationException;
 import br.com.leonardo.bibliotecaspring.repository.EstoqueRepository;
 import br.com.leonardo.bibliotecaspring.repository.LivroRepository;
@@ -27,12 +30,12 @@ public class EstoqueService {
     @Transactional
     public Estoque inserirEstoqueInicial(Long id, int estoqueInicial){
 
-        Livro livro = livroRepository.findById(id).orElseThrow(()-> new ValidationException("Livro não encontrado"));
+        Livro livro = livroRepository.findById(id).orElseThrow(()-> new LivroNaoEncontradoException());
 
         Estoque estoque = livro.getEstoque();
 
         if(estoqueInicial<0){
-            throw new ValidationException("O estoque não pode ser negativo");
+            throw new EstoqueNegativoException();
         }
         
         if(estoque.getEstoqueInicial() == 0) {
@@ -41,7 +44,7 @@ public class EstoqueService {
             verificarDisponibilidade(id);
             return estoque;
         }else{
-            throw new ValidationException("O estoque inicial para este livro ja foi inserido!");
+            throw new EstoqueJaInseridoException();
         }
 
     }
@@ -49,7 +52,7 @@ public class EstoqueService {
     @Transactional
     public void saidaEstoque(Livro livro){
         Estoque estoque = estoqueRepository.findById(livro.getEstoque().getId())
-                .orElseThrow(()-> new ValidationException("Livro nao encontrado!"));
+                .orElseThrow(()-> new LivroNaoEncontradoException());
 
         estoque.setEstoqueAtual(estoque.getEstoqueAtual()-1);
 
@@ -58,7 +61,7 @@ public class EstoqueService {
     }
 
     public void verificarDisponibilidade(Long estoqueId){
-        Estoque estoque = estoqueRepository.findById(estoqueId).orElseThrow(()->new ValidationException("Estoque nao encontrado"));
+        Estoque estoque = estoqueRepository.findById(estoqueId).orElseThrow(()->new LivroNaoEncontradoException());
 
         if(estoque.getEstoqueAtual()>0){
             estoque.setSituacaoLivro(SituacaoLivro.DISPONIVEL);
@@ -70,7 +73,7 @@ public class EstoqueService {
 
     public void retornoEstoque(Livro livro){
         Estoque estoque = estoqueRepository.findById(livro.getEstoque().getId())
-                .orElseThrow(()-> new ValidationException("Livro nao encontrado!"));
+                .orElseThrow(()-> new LivroNaoEncontradoException());
 
         estoque.setEstoqueAtual(estoque.getEstoqueAtual()+1);
 
