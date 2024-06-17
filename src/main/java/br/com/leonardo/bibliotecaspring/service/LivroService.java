@@ -7,6 +7,7 @@ import br.com.leonardo.bibliotecaspring.dto.LivroDTO;
 import br.com.leonardo.bibliotecaspring.dto.CadastroLivroRequest;
 import br.com.leonardo.bibliotecaspring.entity.Estoque;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
+import br.com.leonardo.bibliotecaspring.exception.LivroNaoEncontradoException;
 import br.com.leonardo.bibliotecaspring.exception.ValidationException;
 import br.com.leonardo.bibliotecaspring.repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +49,12 @@ public class LivroService {
 
 
     public LivroDTO pesquisarPeloId(Long id){
-       LivroDTO livro = livroConverter.toDto(repository.findById(id).orElseThrow(()->new ValidationException("Livro não encontrado")));
+       LivroDTO livro = livroConverter.toDto(repository.findById(id).orElseThrow(()->new LivroNaoEncontradoException()));
        return  livro;
     }
 
     public Livro editarLivro(Long id, LivroDTO novoLivro){
-        Livro livro = repository.findById(id).orElseThrow(()-> new ValidationException("Livro não encontrado"));
+        Livro livro = repository.findById(id).orElseThrow(()-> new LivroNaoEncontradoException());
         livro.setTitulo(novoLivro.getTitulo());
         livro.setAutor(novoLivro.getAutor());
         livro.setDataPublicacao(novoLivro.getDataPublicacao());

@@ -1,5 +1,6 @@
 package br.com.leonardo.bibliotecaspring.builders;
 
+import br.com.leonardo.bibliotecaspring.dto.EstoqueDTO;
 import br.com.leonardo.bibliotecaspring.dto.LivroDTO;
 import br.com.leonardo.bibliotecaspring.entity.Estoque;
 import br.com.leonardo.bibliotecaspring.entity.Locacao;
@@ -16,7 +17,7 @@ public class LivroDtoBuilder {
     private String autor;
     private LocalDate dataPublicacao;
     private int edicao;
-    private Estoque estoque;
+    private EstoqueDTO estoqueDto;
     private Set<Locacao> locacoes = new HashSet<Locacao>();
 
     private LivroDtoBuilder(){
@@ -28,7 +29,7 @@ public class LivroDtoBuilder {
         builder.autor = "J.K. Rowling";
         builder.dataPublicacao = LocalDate.of(1997, 6, 26);
         builder.edicao = 1;
-        builder.estoque = new Estoque();
+        builder.estoqueDto = new EstoqueDTO();
         builder.locacoes = new HashSet<Locacao>();
     }
 
@@ -39,7 +40,7 @@ public class LivroDtoBuilder {
     }
 
     public LivroDTO agora(){
-        return new LivroDTO(id,titulo,autor,dataPublicacao,edicao, estoque);
+        return new LivroDTO(id,titulo,autor,dataPublicacao,edicao, estoqueDto);
     }
 
 

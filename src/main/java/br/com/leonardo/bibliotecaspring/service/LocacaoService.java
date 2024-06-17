@@ -1,12 +1,10 @@
 package br.com.leonardo.bibliotecaspring.service;
 
-import br.com.leonardo.bibliotecaspring.converter.ClienteConverter;
-import br.com.leonardo.bibliotecaspring.converter.LivroConverter;
 import br.com.leonardo.bibliotecaspring.converter.LocacaoConverter;
 import br.com.leonardo.bibliotecaspring.dto.LocacaoDTO;
 import br.com.leonardo.bibliotecaspring.dto.SalvarLocacaoRequest;
 import br.com.leonardo.bibliotecaspring.entity.Locacao;
-import br.com.leonardo.bibliotecaspring.exception.ValidationException;
+import br.com.leonardo.bibliotecaspring.exception.*;
 import br.com.leonardo.bibliotecaspring.repository.ClienteRepository;
 import br.com.leonardo.bibliotecaspring.repository.LivroRepository;
 import br.com.leonardo.bibliotecaspring.repository.LocacaoRepository;
@@ -44,8 +42,8 @@ public class LocacaoService {
 
         locacao.setPrazoLocacao(locacaoRequest.getPrazoLocacao());
 
-        locacao.setLivro(livroRepository.findById(locacaoRequest.getIdLivro()).orElseThrow(()-> new ValidationException("Livro não econtrado!")));
-        locacao.setCliente(clienteRepository.findById(locacaoRequest.getIdCliente()).orElseThrow(()-> new ValidationException("Cliente não econtrado!")));
+        locacao.setLivro(livroRepository.findById(locacaoRequest.getIdLivro()).orElseThrow(()-> new LivroNaoEncontradoException()));
+        locacao.setCliente(clienteRepository.findById(locacaoRequest.getIdCliente()).orElseThrow(()-> new ClienteNaoEncontradoException()));
         locacao.setDataSaida(LocalDate.now());
 
 
@@ -63,7 +61,7 @@ public class LocacaoService {
                 break;
 
             default:
-                throw new ValidationException("Prazo de locacao invalido!");
+                throw new PrazoDeLocacaoInvalidoException();
         }
 
         if(locacao.getLivro().getEstoque().getEstoqueAtual()>0) {
@@ -72,14 +70,14 @@ public class LocacaoService {
             return locacaoConverter.toDto(locacaoRepository.save(locacao));
         }
         else{
-            throw new ValidationException("Estoque insuficiente");
+            throw new EstoqueInsuficienteException();
         }
 
     }
 
     @Transactional
     public LocacaoDTO devolverLocacao(Long id){
-        Locacao locacao = locacaoRepository.findById(id).orElseThrow(()->new ValidationException("Locacao nao localizada"));
+        Locacao locacao = locacaoRepository.findById(id).orElseThrow(()->new LocacaoNaoLocalizadaException());
 
         if (locacao.getDataEfetivaDevolucao() == null) {
             estoqueService.retornoEstoque(locacao.getLivro());
@@ -87,7 +85,7 @@ public class LocacaoService {
             estoqueService.verificarDisponibilidade(id);
         }
         else{
-            throw new ValidationException("Este livro já foi devolvido");
+            throw new LivroJaDevolvidoException();
         }
 
         return locacaoConverter.toDto(locacao);

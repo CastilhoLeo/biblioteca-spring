@@ -112,7 +112,7 @@ public class ClienteControllerTest {
 
     @Test
     public void editarCliente_DeveRetornarClienteEditado() throws Exception{
-        Cliente cliente = ClienteBuilder.cliente01().comNome("Roberto").build();
+        Cliente cliente = ClienteBuilder.cliente().comNome("Roberto").build();
         Long clienteId = 1L;
         ClienteDTO novoCliente = ClienteDtoBuilder.umCliente().comNome("Roberto").agora();
         Mockito.when(service.editarCliente(clienteId,novoCliente)).thenReturn(cliente);

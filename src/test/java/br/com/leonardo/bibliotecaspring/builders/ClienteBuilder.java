@@ -36,7 +36,7 @@ public class ClienteBuilder {
         builder.genero = Genero.MASCULINO;
         builder.locacao = new HashSet<Locacao>();
     }
-    public static ClienteBuilder cliente01(){
+    public static ClienteBuilder cliente(){
         ClienteBuilder builder = new ClienteBuilder();
         inicializarDadosPadroes(builder);
         return builder;

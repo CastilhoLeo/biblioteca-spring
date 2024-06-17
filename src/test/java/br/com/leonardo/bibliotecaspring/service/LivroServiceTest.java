@@ -3,6 +3,7 @@ package br.com.leonardo.bibliotecaspring.service;
 
 import br.com.leonardo.bibliotecaspring.builders.LivroBuilder;
 import br.com.leonardo.bibliotecaspring.builders.LivroDtoBuilder;
+import br.com.leonardo.bibliotecaspring.dto.CadastroLivroRequest;
 import br.com.leonardo.bibliotecaspring.dto.LivroDTO;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
 import br.com.leonardo.bibliotecaspring.exception.ValidationException;
@@ -69,10 +70,11 @@ public class LivroServiceTest {
     public void cadastrarLivro_DeveRetornarUmLivroSalvo(){
         Livro livro = LivroBuilder.umLivro().agora();
         LivroDTO livroDto = LivroDtoBuilder.umLivro().agora();
+        CadastroLivroRequest request = new CadastroLivroRequest(livroDto, 1);
 
         Mockito.when(repository.save(any(Livro.class))).thenReturn(livro);
 
-        Livro resultado = service.cadastrarLivro(livroDto);
+        LivroDTO resultado = service.cadastrarLivro(request);
 
         Assertions.assertEquals(resultado.getClass(), Livro.class);
         Mockito.verify(repository, times(1)).save(any(Livro.class));
