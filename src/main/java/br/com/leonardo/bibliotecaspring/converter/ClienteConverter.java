@@ -24,7 +24,7 @@ public class ClienteConverter {
 
         ClienteDTO clienteDTO =  mapper.map(cliente, ClienteDTO.class);
 
-        List<EnderecoDTO> enderecoDTO =  cliente.getEndereco().stream().map((endereco)->enderecoConverter.ToDto(endereco)).toList();
+        List<EnderecoDTO> enderecoDTO =  cliente.getEndereco().stream().map((endereco)->enderecoConverter.toDto(endereco)).toList();
 
         clienteDTO.setEndereco(enderecoDTO);
 

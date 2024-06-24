@@ -35,8 +35,6 @@ public class LivroRepositoryTest {
     }
 
     @Test
-    @Order(1)
-    @Transactional
     public void pesquisaDinamica_DeveRetornarUmPageComTodosOsLivros(){
 
         Livro livro1 = LivroBuilder.umLivro().agora();

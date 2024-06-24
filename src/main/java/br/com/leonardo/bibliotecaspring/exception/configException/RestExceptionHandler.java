@@ -11,49 +11,49 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(PrazoDeLocacaoInvalidoException.class)
-    private ResponseEntity<RestErrorMessage> prazoDeLocacaoInvalido(PrazoDeLocacaoInvalidoException exception){
+    public ResponseEntity<RestErrorMessage> prazoDeLocacaoInvalido(PrazoDeLocacaoInvalidoException exception){
         RestErrorMessage restErrorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(restErrorMessage);
     }
 
     @ExceptionHandler(LivroNaoEncontradoException.class)
-    private ResponseEntity<RestErrorMessage> livroNaoEncotrado(LivroNaoEncontradoException exception){
+    public ResponseEntity<RestErrorMessage> livroNaoEncotrado(LivroNaoEncontradoException exception){
         RestErrorMessage restErrorMessage = new RestErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(restErrorMessage);
     }
 
     @ExceptionHandler(EstoqueInsuficienteException.class)
-    private ResponseEntity<RestErrorMessage> restErrorMessage (EstoqueInsuficienteException exception){
+    public ResponseEntity<RestErrorMessage> estoqueInsuficiente (EstoqueInsuficienteException exception){
         RestErrorMessage restErrorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(restErrorMessage);
     }
 
     @ExceptionHandler(ClienteNaoEncontradoException.class)
-    private ResponseEntity<RestErrorMessage> clienteNaoEncotrado(ClienteNaoEncontradoException exception){
+    public ResponseEntity<RestErrorMessage> clienteNaoEncotrado(ClienteNaoEncontradoException exception){
         RestErrorMessage restErrorMessage = new RestErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(restErrorMessage);
     }
 
     @ExceptionHandler(EstoqueJaInseridoException.class)
-    private ResponseEntity<RestErrorMessage> estoqueJaInserido(EstoqueJaInseridoException exception){
+    public ResponseEntity<RestErrorMessage> estoqueJaInserido(EstoqueJaInseridoException exception){
         RestErrorMessage restErrorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(restErrorMessage);
     }
 
     @ExceptionHandler(EstoqueNegativoException.class)
-    private ResponseEntity<RestErrorMessage> estoqueNegativo(EstoqueNegativoException exception){
+    public ResponseEntity<RestErrorMessage> estoqueNegativo(EstoqueNegativoException exception){
         RestErrorMessage restErrorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(restErrorMessage);
     }
 
     @ExceptionHandler(LocacaoNaoLocalizadaException.class)
-    private ResponseEntity<RestErrorMessage> locacaoNaoLocalizada(LocacaoNaoLocalizadaException exception){
+    public ResponseEntity<RestErrorMessage> locacaoNaoLocalizada(LocacaoNaoLocalizadaException exception){
         RestErrorMessage restErrorMessage = new RestErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(restErrorMessage);
     }
 
     @ExceptionHandler(LivroJaDevolvidoException.class)
-    private ResponseEntity<RestErrorMessage> livroJaDevolvido(LivroJaDevolvidoException exception){
+    public ResponseEntity<RestErrorMessage> livroJaDevolvido(LivroJaDevolvidoException exception){
         RestErrorMessage restErrorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(restErrorMessage);
     }

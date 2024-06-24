@@ -53,13 +53,13 @@ public class LivroService {
        return  livro;
     }
 
-    public Livro editarLivro(Long id, LivroDTO novoLivro){
+    public LivroDTO editarLivro(Long id, LivroDTO novoLivro){
         Livro livro = repository.findById(id).orElseThrow(()-> new LivroNaoEncontradoException());
         livro.setTitulo(novoLivro.getTitulo());
         livro.setAutor(novoLivro.getAutor());
         livro.setDataPublicacao(novoLivro.getDataPublicacao());
         livro.setEdicao(novoLivro.getEdicao());
-        return repository.save(livro);
+        return livroConverter.toDto(repository.save(livro));
     }
 
     public void deletarLivro(Long id){

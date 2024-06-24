@@ -40,17 +40,17 @@ public class ClienteService {
         }
 
 
-    public Cliente cadastrarCliente(ClienteDTO clienteDTO){
+    public ClienteDTO cadastrarCliente(ClienteDTO clienteDTO){
        Cliente cliente = this.clienteConverter.toEntity(clienteDTO);
        cliente.getEndereco().forEach(endereco-> endereco.setCliente(cliente));
-       return this.clienteRepository.save(cliente);
+       return clienteConverter.toDto((this.clienteRepository.save(cliente)));
     }
 
     public void deletarCliente(Long id){
        clienteRepository.deleteById(id);
     }
 
-    public Cliente editarCliente(Long id, ClienteDTO novoCliente){
+    public ClienteDTO editarCliente(Long id, ClienteDTO novoCliente){
             Cliente novoCliente2 = clienteConverter.toEntity(novoCliente);
            Cliente cliente = clienteRepository.findById(id).orElseThrow(()-> new ClienteNaoEncontradoException());
            cliente.setCpf(novoCliente2.getCpf());
@@ -59,7 +59,7 @@ public class ClienteService {
            cliente.setEndereco(novoCliente2.getEndereco());
            cliente.setTelefone(novoCliente2.getTelefone());
            cliente.setDataNascimento(novoCliente2.getDataNascimento());
-           return clienteRepository.save(cliente);
+           return clienteConverter.toDto(clienteRepository.save(cliente));
     }
 
     public Page<ClienteDTO> pesquisaDinamica(String nome, String cpf,  Pageable pageable){

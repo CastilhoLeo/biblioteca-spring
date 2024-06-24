@@ -14,6 +14,7 @@ public class EnderecoTest {
         endereco.setCep("87023015");
         endereco.setComplemento("bl 4 ap 801");
         endereco.setBairro("Cidade Nova");
+        endereco.setCliente(new Cliente());
 
         Assertions.assertNotNull(endereco);
         Assertions.assertEquals(Endereco.class, endereco.getClass());
@@ -23,6 +24,8 @@ public class EnderecoTest {
         Assertions.assertEquals(endereco.getCep(), "87023015");
         Assertions.assertEquals(endereco.getComplemento(), "bl 4 ap 801");
         Assertions.assertEquals(endereco.getBairro(), "Cidade Nova");
+        Assertions.assertEquals(endereco.getCliente().getClass(), Cliente.class);
+        Assertions.assertNotNull(endereco.getCliente());
     }
 
 

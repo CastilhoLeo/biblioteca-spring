@@ -23,9 +23,10 @@ public class LivroConverter {
 
         LivroDTO livroDto = mapper.map(livro, LivroDTO.class);
 
-        EstoqueDTO estoqueDto = estoqueConverter.toDto(livro.getEstoque());
-
-        livroDto.setEstoqueDto(estoqueDto);
+        if(livro.getEstoque() != null) {
+            EstoqueDTO estoqueDto = estoqueConverter.toDto(livro.getEstoque());
+            livroDto.setEstoqueDto(estoqueDto);
+        }
 
         return livroDto;
     }
@@ -33,9 +34,10 @@ public class LivroConverter {
     public Livro toEntity(LivroDTO livroDto){
         Livro livro = mapper.map(livroDto, Livro.class);
 
-        Estoque estoque = estoqueConverter.toEntity(livroDto.getEstoqueDto());
-
-        livro.setEstoque(estoque);
+        if(livro.getEstoque() != null) {
+            Estoque estoque = estoqueConverter.toEntity(livroDto.getEstoqueDto());
+            livro.setEstoque(estoque);
+        }
 
         return livro;
     }

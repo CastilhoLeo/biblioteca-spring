@@ -24,6 +24,7 @@ public class ClienteDtoBuilder {
     }
 
     private static void inicializarDadosPadroes(ClienteDtoBuilder builder) {
+        builder.id = 1L;
         builder.nome = "Leonardo";
         builder.sobrenome = "Castilho";
         builder.dataNascimento = LocalDate.of(1992,11,13);

@@ -65,7 +65,7 @@ public class ClienteControllerTest {
     public void cadastrarCliente_DeveCadastrarUmCliente() throws Exception {
 
         ClienteDTO cliente = ClienteDtoBuilder.umCliente().agora();
-        Mockito.when(service.cadastrarCliente(any(ClienteDTO.class))).thenReturn(new Cliente());
+        Mockito.when(service.cadastrarCliente(any(ClienteDTO.class))).thenReturn(new ClienteDTO());
 
         mockMvc.perform(post("/api/clientes/cadastro")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -115,7 +115,7 @@ public class ClienteControllerTest {
         Cliente cliente = ClienteBuilder.cliente().comNome("Roberto").build();
         Long clienteId = 1L;
         ClienteDTO novoCliente = ClienteDtoBuilder.umCliente().comNome("Roberto").agora();
-        Mockito.when(service.editarCliente(clienteId,novoCliente)).thenReturn(cliente);
+        Mockito.when(service.editarCliente(clienteId,novoCliente)).thenReturn(novoCliente);
 
             mockMvc.perform(put("/api/clientes/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
