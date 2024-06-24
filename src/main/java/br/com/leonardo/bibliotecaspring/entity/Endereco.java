@@ -38,7 +38,6 @@ public class Endereco {
 
     @ManyToOne
     @JoinColumn (name = "cliente_id")
-    @JsonIgnore
     private Cliente cliente;
 
 }

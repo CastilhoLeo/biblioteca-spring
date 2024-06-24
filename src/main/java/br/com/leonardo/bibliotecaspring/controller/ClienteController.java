@@ -34,7 +34,7 @@ public class ClienteController {
             return ok().body(this.clienteService.pesquisaDinamica(nome, cpf, pageable));
     }
     @PostMapping("/cadastro")
-    public ResponseEntity<Cliente> cadastrarCliente( @RequestBody ClienteDTO clienteDTO ){
+    public ResponseEntity<ClienteDTO> cadastrarCliente( @RequestBody ClienteDTO clienteDTO ){
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.cadastrarCliente(clienteDTO));
     }
 
@@ -45,7 +45,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> editarCliente(@PathVariable Long id, @RequestBody ClienteDTO clienteDto){
+    public ResponseEntity<ClienteDTO> editarCliente(@PathVariable Long id, @RequestBody ClienteDTO clienteDto){
         return ok().body(this.clienteService.editarCliente(id, clienteDto));
     }
 }

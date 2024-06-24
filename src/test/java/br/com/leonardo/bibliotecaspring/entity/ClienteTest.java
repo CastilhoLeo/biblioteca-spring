@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class ClienteTest {
 
@@ -20,6 +21,7 @@ public class ClienteTest {
                 cliente.setCpf("41861297890");
                 cliente.setTelefone("44998240563");
                 cliente.setGenero(Genero.MASCULINO);
+                cliente.setLocacoes((new HashSet<Locacao>()));
 
         Assertions.assertNotNull(cliente);
         Assertions.assertEquals(Cliente.class, cliente.getClass());
@@ -31,5 +33,6 @@ public class ClienteTest {
         Assertions.assertEquals(cliente.getCpf(), "41861297890");
         Assertions.assertEquals(cliente.getTelefone(), "44998240563");
         Assertions.assertEquals(cliente.getGenero(), Genero.MASCULINO);
+        Assertions.assertEquals(cliente.getLocacoes().size(), 0);
     }
 }

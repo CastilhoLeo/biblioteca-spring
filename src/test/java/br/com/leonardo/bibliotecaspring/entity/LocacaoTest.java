@@ -18,6 +18,7 @@ public class LocacaoTest {
 
         locacao.setCliente(cliente);
         locacao.setLivro(livro);
+        locacao.setId(1L);
         locacao.setPrazoLocacao(PrazoLocacao.DIAS_15);
         locacao.setDataSaida(LocalDate.of(2024,6,15));
         locacao.setDataPrevistaDevolucao(LocalDate.of(2024,6,30));
@@ -25,6 +26,7 @@ public class LocacaoTest {
 
         Assertions.assertEquals(locacao.getLivro(), livro);
         Assertions.assertEquals(locacao.getCliente(), cliente);
+        Assertions.assertEquals(locacao.getId(), 1L);
         Assertions.assertEquals(locacao.getPrazoLocacao(), PrazoLocacao.DIAS_15);
         Assertions.assertEquals(locacao.getDataSaida(), LocalDate.of(2024,6,15));
         Assertions.assertEquals(locacao.getDataPrevistaDevolucao(), LocalDate.of(2024,6,30));

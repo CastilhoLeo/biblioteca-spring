@@ -12,7 +12,7 @@ public class EnderecoConverter {
     @Autowired
     private ModelMapper mapper;
 
-    public EnderecoDTO ToDto (Endereco endereco){
+    public EnderecoDTO toDto (Endereco endereco){
         return mapper.map(endereco, EnderecoDTO.class);
     }
 

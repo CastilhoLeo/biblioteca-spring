@@ -1,21 +1,16 @@
 package br.com.leonardo.bibliotecaspring.service;
 
-import br.com.leonardo.bibliotecaspring.converter.LivroConverter;
-import br.com.leonardo.bibliotecaspring.dto.LivroDTO;
 import br.com.leonardo.bibliotecaspring.entity.Estoque;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
 import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
 import br.com.leonardo.bibliotecaspring.exception.EstoqueJaInseridoException;
 import br.com.leonardo.bibliotecaspring.exception.EstoqueNegativoException;
 import br.com.leonardo.bibliotecaspring.exception.LivroNaoEncontradoException;
-import br.com.leonardo.bibliotecaspring.exception.ValidationException;
 import br.com.leonardo.bibliotecaspring.repository.EstoqueRepository;
 import br.com.leonardo.bibliotecaspring.repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 public class EstoqueService {

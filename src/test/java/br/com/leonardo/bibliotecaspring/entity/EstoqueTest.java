@@ -12,11 +12,13 @@ public class EstoqueTest {
     public void deveInstanciarUmEstoque(){
         Livro livro = LivroBuilder.umLivro().agora();
         Estoque estoque = new Estoque();
+        estoque.setId(1L);
         estoque.setEstoqueInicial(1);
         estoque.setLivro(livro);
         estoque.setEstoqueAtual(1);
         estoque.setSituacaoLivro(SituacaoLivro.DISPONIVEL);
 
+        Assertions.assertEquals(estoque.getId(), 1L);
         Assertions.assertEquals(estoque.getEstoqueAtual(), 1);
         Assertions.assertEquals(estoque.getEstoqueInicial(), 1);
         Assertions.assertEquals(estoque.getLivro(), livro);
