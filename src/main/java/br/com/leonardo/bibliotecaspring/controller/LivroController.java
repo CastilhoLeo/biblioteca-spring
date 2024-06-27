@@ -35,9 +35,9 @@ public class LivroController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LivroDTO> editarCliente(@PathVariable Long id, @RequestBody LivroDTO clienteEditado){
+    public ResponseEntity<LivroDTO> editarCliente(@PathVariable Long id, @RequestBody LivroDTO livroEditado){
 
-        return ResponseEntity.accepted().body(service.editarLivro(id, clienteEditado));
+        return ResponseEntity.accepted().body(service.editarLivro(id, livroEditado));
 
     }
 

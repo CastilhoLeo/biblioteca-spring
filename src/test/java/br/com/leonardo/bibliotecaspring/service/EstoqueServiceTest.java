@@ -1,13 +1,15 @@
-package br.com.leonardo.bibliotecaspring.repository;
+package br.com.leonardo.bibliotecaspring.service;
 
 
 import br.com.leonardo.bibliotecaspring.builders.LivroBuilder;
 import br.com.leonardo.bibliotecaspring.entity.Estoque;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
+import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
 import br.com.leonardo.bibliotecaspring.exception.EstoqueJaInseridoException;
 import br.com.leonardo.bibliotecaspring.exception.EstoqueNegativoException;
 import br.com.leonardo.bibliotecaspring.exception.LivroNaoEncontradoException;
-import br.com.leonardo.bibliotecaspring.service.EstoqueService;
+import br.com.leonardo.bibliotecaspring.repository.EstoqueRepository;
+import br.com.leonardo.bibliotecaspring.repository.LivroRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -105,9 +107,76 @@ public class EstoqueServiceTest {
 
         Assertions.assertEquals(estoque.getEstoqueAtual(), 0);
         Mockito.verify(estoqueRepository, Mockito.times(1)).findById(1L);
+    }
 
+    @Test
+    public void verificarDisponibilidade_DeveFicarEstoqueDisponivel(){
+        Livro livro = LivroBuilder.umLivro().agora();
+        livro.getEstoque().setId(1L);
+        livro.getEstoque().setEstoqueAtual(1);
+
+
+        Mockito.when(estoqueRepository.findById(anyLong())).thenReturn(Optional.of(livro.getEstoque()));
+
+        estoqueService.verificarDisponibilidade(livro.getEstoque().getId());
+
+        Assertions.assertEquals(livro.getEstoque().getSituacaoLivro(), SituacaoLivro.DISPONIVEL);
+    }
+
+    @Test
+    public void verificarDisponibilidade_DeveFicarSemEstoque(){
+        Livro livro = LivroBuilder.umLivro().agora();
+        livro.getEstoque().setId(1L);
+        livro.getEstoque().setEstoqueAtual(0);
+
+
+        Mockito.when(estoqueRepository.findById(anyLong())).thenReturn(Optional.of(livro.getEstoque()));
+
+        estoqueService.verificarDisponibilidade(livro.getEstoque().getId());
+
+        Assertions.assertEquals(livro.getEstoque().getSituacaoLivro(), SituacaoLivro.SEM_ESTOQUE);
+    }
+
+
+    @Test
+    public void verificarDisponibilidade_DeveRetornarExceptionLivroNaoEncontrado(){
+
+        Livro livro = LivroBuilder.umLivro().agora();
+        livro.getEstoque().setId(1L);
+
+        Mockito.when(estoqueRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        LivroNaoEncontradoException ex = Assertions.assertThrows(LivroNaoEncontradoException.class,()-> estoqueService.verificarDisponibilidade(livro.getEstoque().getId()));
+
+        Assertions.assertEquals(ex.getMessage(), "Livro não encontrado!");
 
     }
 
+    @Test
+    public void retornoEstoque_DeveDevolverLivroAoEstoque(){
+        Livro livro = LivroBuilder.umLivro().agora();
+        livro.getEstoque().setId(1L);
+        livro.getEstoque().setEstoqueAtual(1);
+
+        Mockito.when(estoqueRepository.findById(anyLong())).thenReturn(Optional.of(livro.getEstoque()));
+
+        estoqueService.retornoEstoque(livro);
+
+        Assertions.assertEquals(livro.getEstoque().getEstoqueAtual(), 2);
+        Mockito.verify(estoqueRepository, Mockito.times(1)).findById(1L);
+    }
+
+    @Test
+    public void retornoEstoque_DeveRetornarLivroNaoEncontradoException(){
+        Livro livro = LivroBuilder.umLivro().agora();
+        livro.getEstoque().setId(1L);
+
+        Mockito.when(estoqueRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        LivroNaoEncontradoException ex = Assertions.assertThrows(LivroNaoEncontradoException.class,()-> estoqueService.retornoEstoque(livro));
+
+        Assertions.assertEquals(ex.getMessage(), "Livro não encontrado!");
+
+    }
 
 }
