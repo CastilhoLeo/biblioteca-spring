@@ -5,6 +5,7 @@ import br.com.leonardo.bibliotecaspring.dto.SalvarLocacaoRequest;
 import br.com.leonardo.bibliotecaspring.entity.Locacao;
 import br.com.leonardo.bibliotecaspring.service.LocacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class LocacaoController {
 
     @PostMapping("/cadastro")
     public ResponseEntity<LocacaoDTO> cadastrarLocacao(@RequestBody SalvarLocacaoRequest locacaoRequest){
-        return ResponseEntity.ok().body(locacaoService.salvarLocacao(locacaoRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(locacaoService.salvarLocacao(locacaoRequest));
     }
 
     @PutMapping("/{id}")
