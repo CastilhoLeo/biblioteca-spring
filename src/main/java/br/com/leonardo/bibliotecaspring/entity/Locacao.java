@@ -32,15 +32,19 @@ public class Locacao {
     @JoinColumn(name = "livro_id")
     private Livro livro;
 
+    @Column(name = "prazo_locacao")
     @Enumerated(EnumType.STRING)
     private PrazoLocacao prazoLocacao;
 
+    @Column(name = "data_saida")
     @Temporal(TemporalType.DATE)
     private LocalDate dataSaida;
 
+    @Column(name = "data_prevista_devolucao")
     @Temporal(TemporalType.DATE)
     private LocalDate dataPrevistaDevolucao;
 
+    @Column(name = "data_efetiva_devolucao")
     @Temporal(TemporalType.DATE)
     private LocalDate dataEfetivaDevolucao;
 

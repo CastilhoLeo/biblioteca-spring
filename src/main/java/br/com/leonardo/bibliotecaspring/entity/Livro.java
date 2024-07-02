@@ -29,6 +29,7 @@ public class Livro {
 
     private String autor;
 
+    @Column(name = "data_publicacao")
     @Temporal(TemporalType.DATE)
     private LocalDate dataPublicacao;
 

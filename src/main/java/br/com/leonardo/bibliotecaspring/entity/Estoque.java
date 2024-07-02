@@ -19,12 +19,16 @@ public class Estoque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
+
+    @Column(name = "estoque_atual")
     @Min(value = 0, message = "O estoque ficará negativo!")
     private int estoqueAtual;
 
+    @Column(name = "estoque_inicial")
     @Min(value = 0, message = "O estoque atual ficará negativo")
     private int estoqueInicial;
 
+    @Column(name = "situacao_livro")
     @Enumerated(EnumType.STRING)
     private SituacaoLivro situacaoLivro;
 
