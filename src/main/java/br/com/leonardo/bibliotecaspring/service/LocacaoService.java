@@ -82,7 +82,7 @@ public class LocacaoService {
         if (locacao.getDataEfetivaDevolucao() == null) {
             estoqueService.retornoEstoque(locacao.getLivro());
             locacao.setDataEfetivaDevolucao(LocalDate.now());
-            estoqueService.verificarDisponibilidade(id);
+            estoqueService.verificarDisponibilidade(locacao.getLivro().getEstoque().getId());
         }
         else{
             throw new LivroJaDevolvidoException();

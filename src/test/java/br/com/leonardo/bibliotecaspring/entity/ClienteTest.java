@@ -3,11 +3,13 @@ package br.com.leonardo.bibliotecaspring.entity;
 import br.com.leonardo.bibliotecaspring.enums.Genero;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+@ActiveProfiles("test")
 public class ClienteTest {
 
     @Test

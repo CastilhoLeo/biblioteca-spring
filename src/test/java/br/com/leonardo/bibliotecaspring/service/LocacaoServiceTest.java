@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -29,6 +30,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 public class LocacaoServiceTest {
 
     @Mock
@@ -245,7 +247,7 @@ public class LocacaoServiceTest {
 
         Assertions.assertEquals(locacaoSalva.getDataEfetivaDevolucao(), LocalDate.now());
         Mockito.verify(estoqueService, Mockito.times(1)).retornoEstoque(locacao.getLivro());
-        Mockito.verify(estoqueService, Mockito.times(1)).verificarDisponibilidade(1L);
+        Mockito.verify(estoqueService, Mockito.times(1)).verificarDisponibilidade(locacao.getLivro().getEstoque().getId());
         Mockito.verify(locacaoConverter, Mockito.times(1)).toDto(locacao);
 
     }
