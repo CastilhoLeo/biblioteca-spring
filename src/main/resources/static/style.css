@@ -1,0 +1,29 @@
+header {
+    background: blue;
+    height: 50px;
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-between; /* Distribui os itens com espaçamento igual */
+    width: 80%; /* Ajuste a largura conforme necessário */
+    padding: 0; /* Remove o padding padrão do ul */
+    margin: 0; /* Remove o margin padrão do ul */
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: Arial, sans-serif; /* Adiciona sans-serif como fallback */
+    font-weight: bold;
+}
+
+nav ul li {
+    list-style: none;
+    margin: 0 60px; /* Espaçamento entre os itens do menu */
+}
+

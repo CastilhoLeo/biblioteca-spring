@@ -4,8 +4,9 @@ import br.com.leonardo.bibliotecaspring.builders.LivroBuilder;
 import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
-
+@ActiveProfiles("test")
 public class EstoqueTest {
 
     @Test

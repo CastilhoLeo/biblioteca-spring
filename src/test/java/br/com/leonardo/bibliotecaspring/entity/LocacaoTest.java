@@ -5,9 +5,11 @@ import br.com.leonardo.bibliotecaspring.builders.LivroBuilder;
 import br.com.leonardo.bibliotecaspring.enums.PrazoLocacao;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 
+@ActiveProfiles("test")
 public class LocacaoTest {
 
     @Test
