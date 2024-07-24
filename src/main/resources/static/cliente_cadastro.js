@@ -9,10 +9,10 @@ document.getElementById('formularioCliente').addEventListener('submit', function
         cpf: document.getElementById('cpf').value,
         telefone: document.getElementById('telefone').value,
         genero: document.getElementById('genero').value,
-        enderecos: []
+        endereco: []
     };
 
-    const endereco = {
+    const enderecoo = {
         rua: document.getElementById('rua').value,
         numero: document.getElementById('numero').value,
         cep: document.getElementById('cep').value,
@@ -20,7 +20,7 @@ document.getElementById('formularioCliente').addEventListener('submit', function
         bairro: document.getElementById('bairro').value
     };
 
-    cliente.enderecos.push(endereco);
+    cliente.endereco.push(enderecoo);
 
     if(!document.getElementById('id').value){
     fetch('api/clientes/cadastro', {
