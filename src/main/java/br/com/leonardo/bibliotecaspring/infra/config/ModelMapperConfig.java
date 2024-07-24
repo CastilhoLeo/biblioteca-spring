@@ -1,4 +1,4 @@
-package br.com.leonardo.bibliotecaspring.config;
+package br.com.leonardo.bibliotecaspring.infra.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

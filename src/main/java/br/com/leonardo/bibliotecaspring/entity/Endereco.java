@@ -11,7 +11,6 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Component;
 
 
-@Transactional
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
