@@ -1,6 +1,7 @@
 package br.com.leonardo.bibliotecaspring.exception.configException;
 
 import br.com.leonardo.bibliotecaspring.exception.*;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -54,6 +55,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(LivroJaDevolvidoException.class)
     public ResponseEntity<RestErrorMessage> livroJaDevolvido(LivroJaDevolvidoException exception){
+        RestErrorMessage restErrorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(restErrorMessage);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<RestErrorMessage> erroConstraint(ConstraintViolationException exception){
         RestErrorMessage restErrorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(restErrorMessage);
     }

@@ -1,11 +1,8 @@
 package br.com.leonardo.bibliotecaspring.entity;
 
 import br.com.leonardo.bibliotecaspring.enums.Genero;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -53,4 +50,7 @@ public class Cliente {
     
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Locacao> locacoes = new HashSet<>();
+
+//    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Usuarios usuarios;
 }

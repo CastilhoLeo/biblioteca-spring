@@ -13,10 +13,12 @@ public class EnderecoConverter {
     private ModelMapper mapper;
 
     public EnderecoDTO toDto (Endereco endereco){
+
         return mapper.map(endereco, EnderecoDTO.class);
     }
 
     public Endereco toEntity (EnderecoDTO enderecoDto){
+
         return mapper.map(enderecoDto, Endereco.class);
     }
 }

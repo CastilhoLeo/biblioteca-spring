@@ -25,6 +25,7 @@ public class ClienteController {
     public ResponseEntity<ClienteDTO>encontrarPeloId(@PathVariable Long id){
         return ok()
                 .body(this.clienteService.localizarPeloId(id));
+
     }
 
     @GetMapping
