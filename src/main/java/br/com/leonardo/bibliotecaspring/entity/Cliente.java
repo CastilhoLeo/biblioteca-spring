@@ -51,6 +51,4 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Locacao> locacoes = new HashSet<>();
 
-//    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private Usuarios usuarios;
 }

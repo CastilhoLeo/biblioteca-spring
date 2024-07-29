@@ -4,6 +4,7 @@ package br.com.leonardo.bibliotecaspring.controller;
 import br.com.leonardo.bibliotecaspring.dto.ClienteDTO;
 import br.com.leonardo.bibliotecaspring.entity.Cliente;
 import br.com.leonardo.bibliotecaspring.service.ClienteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,7 +36,7 @@ public class ClienteController {
             return ok().body(this.clienteService.pesquisaDinamica(nome, cpf, pageable));
     }
     @PostMapping("/cadastro")
-    public ResponseEntity<ClienteDTO> cadastrarCliente( @RequestBody ClienteDTO clienteDTO ){
+    public ResponseEntity<ClienteDTO> cadastrarCliente( @RequestBody @Valid ClienteDTO clienteDTO ){
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.cadastrarCliente(clienteDTO));
     }
 
