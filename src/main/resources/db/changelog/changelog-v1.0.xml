@@ -80,13 +80,14 @@
         </createTable>
 
         <createTable tableName="entrada">
-            <column name="id" type="bigint">
+            <column name="id" autoIncrement="true" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="quantidade" type="int"/>
             <column name="livro_id" type="bigint">
                 <constraints nullable="false" foreignKeyName = "fk_livro_entrada_id" references= "livro(id)"/>
             </column>
+            <column name="data" type="date"/>
         </createTable>
     </changeSet>
 

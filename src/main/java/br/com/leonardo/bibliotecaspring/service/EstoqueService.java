@@ -1,5 +1,6 @@
 package br.com.leonardo.bibliotecaspring.service;
 
+import br.com.leonardo.bibliotecaspring.dto.SalvarEntradaRequest;
 import br.com.leonardo.bibliotecaspring.entity.Estoque;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
 import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 @Service
 public class EstoqueService {
 
@@ -22,6 +25,7 @@ public class EstoqueService {
     @Autowired
     private LivroRepository livroRepository;
 
+
     @Transactional
     public Estoque entradaEstoque(Long id, int entradaEstoque){
 
@@ -31,6 +35,7 @@ public class EstoqueService {
 
         estoque.setEstoqueAtual(estoque.getEstoqueAtual() + entradaEstoque);
         verificarDisponibilidade(id);
+
         return estoque;
 
     }

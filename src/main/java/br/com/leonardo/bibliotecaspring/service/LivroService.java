@@ -4,6 +4,8 @@ import br.com.leonardo.bibliotecaspring.converter.LivroConverter;
 import br.com.leonardo.bibliotecaspring.dto.EstoqueDTO;
 import br.com.leonardo.bibliotecaspring.dto.LivroDTO;
 import br.com.leonardo.bibliotecaspring.dto.CadastroLivroRequest;
+import br.com.leonardo.bibliotecaspring.dto.SalvarEntradaRequest;
+import br.com.leonardo.bibliotecaspring.entity.Entrada;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
 import br.com.leonardo.bibliotecaspring.exception.LivroNaoEncontradoException;
 import br.com.leonardo.bibliotecaspring.repository.LivroRepository;
@@ -12,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 @Service
 public class LivroService {
@@ -24,6 +28,9 @@ public class LivroService {
 
     @Autowired
     private EstoqueService estoqueService;
+
+    @Autowired
+    private EntradaService entradaService;
 
 
     @Transactional
@@ -39,7 +46,9 @@ public class LivroService {
         livro.getEstoque().setLivro(livro);
 
         LivroDTO livroDto = livroConverter.toDto(repository.save(livro));
-        estoqueService.entradaEstoque(livro.getId(), entradaEstoque);
+
+        SalvarEntradaRequest entradaRequest = new SalvarEntradaRequest(livro.getId(), entradaEstoque, LocalDate.now());
+        entradaService.salvarEntrada(entradaRequest);
 
         return livroDto;
     }

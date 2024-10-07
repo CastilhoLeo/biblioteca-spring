@@ -28,6 +28,7 @@ public class EntradaService {
     @Autowired
     private EstoqueService estoqueService;
 
+
 public EntradaDTO salvarEntrada(SalvarEntradaRequest salvarEntradaRequest){
 
     Livro livro = livroRepository.findById(salvarEntradaRequest.getIdLivro()).orElseThrow(()->new LivroNaoEncontradoException());
@@ -37,9 +38,7 @@ public EntradaDTO salvarEntrada(SalvarEntradaRequest salvarEntradaRequest){
     entrada.setQuantidade(salvarEntradaRequest.getQuantidade());
     entrada.setData(salvarEntradaRequest.getData());
 
-    estoqueService.entradaEstoque(entrada.getLivro().getId(), entrada.getQuantidade());
-
-
+    estoqueService.entradaEstoque(livro.getId(),  salvarEntradaRequest.getQuantidade());
     return entradaConverter.toDto(entradaRepository.save(entrada));
 
 }
