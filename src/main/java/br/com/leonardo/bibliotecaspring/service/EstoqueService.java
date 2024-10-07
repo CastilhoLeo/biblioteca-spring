@@ -23,29 +23,20 @@ public class EstoqueService {
     private LivroRepository livroRepository;
 
     @Transactional
-    public Estoque inserirEstoqueInicial(Long id, int estoqueInicial){
+    public Estoque entradaEstoque(Long id, int entradaEstoque){
 
         Livro livro = livroRepository.findById(id).orElseThrow(()-> new LivroNaoEncontradoException());
 
         Estoque estoque = livro.getEstoque();
 
-        if(estoqueInicial<0){
-            throw new EstoqueNegativoException();
-        }
-        
-        if(estoque.getEstoqueInicial() == 0) {
-            estoque.setEstoqueInicial((estoqueInicial));
-            estoque.setEstoqueAtual(estoque.getEstoqueInicial());
-            verificarDisponibilidade(id);
-            return estoque;
-        }else{
-            throw new EstoqueJaInseridoException();
-        }
+        estoque.setEstoqueAtual(estoque.getEstoqueAtual() + entradaEstoque);
+        verificarDisponibilidade(id);
+        return estoque;
 
     }
 
     @Transactional
-    public void saidaEstoque(Livro livro){
+    public void saidaEsoqueLocacao(Livro livro){
         Estoque estoque = estoqueRepository.findById(livro.getEstoque().getId())
                 .orElseThrow(()-> new LivroNaoEncontradoException());
 
@@ -54,6 +45,7 @@ public class EstoqueService {
         estoqueRepository.save(estoque);
 
     }
+
 
     public void verificarDisponibilidade(Long estoqueId){
         Estoque estoque = estoqueRepository.findById(estoqueId).orElseThrow(()->new LivroNaoEncontradoException());

@@ -50,18 +50,11 @@
             <constraints primaryKey="true" nullable="false" />
         </column>
         <column name="estoque_atual" type="int"/>
-        <column name="estoque_inicial" type="int"/>
         <column name="situacao_livro" type="varchar(50)"/>
         <column name="livro_id" type="bigint">
             <constraints nullable="true" foreignKeyName="fk_livro_id" references="livro(id)"/>
         </column>
     </createTable>
-
-        <sql>
-            ALTER TABLE estoque
-            ADD CONSTRAINT estoque_inicial_maior_zero
-            CHECK (estoque_inicial >= 0);
-        </sql>
 
         <sql>
             ALTER TABLE estoque
@@ -84,6 +77,16 @@
                 <constraints nullable="false" foreignKeyName="fk_cliente_locacao_id" references="cliente(id)"/>
             </column>
 
+        </createTable>
+
+        <createTable tableName="entrada">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="quantidade" type="int"/>
+            <column name="livro_id" type="bigint">
+                <constraints nullable="false" foreignKeyName = "fk_livro_entrada_id" references= "livro(id)"/>
+            </column>
         </createTable>
     </changeSet>
 

@@ -1,14 +1,11 @@
 package br.com.leonardo.bibliotecaspring.service;
 
-import br.com.leonardo.bibliotecaspring.converter.EstoqueConverter;
 import br.com.leonardo.bibliotecaspring.converter.LivroConverter;
 import br.com.leonardo.bibliotecaspring.dto.EstoqueDTO;
 import br.com.leonardo.bibliotecaspring.dto.LivroDTO;
 import br.com.leonardo.bibliotecaspring.dto.CadastroLivroRequest;
-import br.com.leonardo.bibliotecaspring.entity.Estoque;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
 import br.com.leonardo.bibliotecaspring.exception.LivroNaoEncontradoException;
-import br.com.leonardo.bibliotecaspring.exception.ValidationException;
 import br.com.leonardo.bibliotecaspring.repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,7 +30,7 @@ public class LivroService {
     public LivroDTO cadastrarLivro(CadastroLivroRequest livroRequest){
 
        LivroDTO livroDTO = livroRequest.getLivroDto();
-       int estoqueInicial = livroRequest.getEstoqueInicial();
+       int entradaEstoque = livroRequest.getEstoqueInicial();
 
         EstoqueDTO estoqueDto = new EstoqueDTO();
         livroDTO.setEstoqueDto(estoqueDto);
@@ -42,7 +39,7 @@ public class LivroService {
         livro.getEstoque().setLivro(livro);
 
         LivroDTO livroDto = livroConverter.toDto(repository.save(livro));
-        estoqueService.inserirEstoqueInicial(livro.getId(), estoqueInicial);
+        estoqueService.entradaEstoque(livro.getId(), entradaEstoque);
 
         return livroDto;
     }

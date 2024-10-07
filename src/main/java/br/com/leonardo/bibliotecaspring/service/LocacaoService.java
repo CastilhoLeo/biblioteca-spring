@@ -65,7 +65,7 @@ public class LocacaoService {
         }
 
         if(locacao.getLivro().getEstoque().getEstoqueAtual()>0) {
-            estoqueService.saidaEstoque(locacao.getLivro());
+            estoqueService.saidaEsoqueLocacao(locacao.getLivro());
             estoqueService.verificarDisponibilidade(locacao.getLivro().getEstoque().getId());
             return locacaoConverter.toDto(locacaoRepository.save(locacao));
         }

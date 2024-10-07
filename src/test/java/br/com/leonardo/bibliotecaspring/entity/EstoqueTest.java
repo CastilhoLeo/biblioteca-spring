@@ -14,14 +14,12 @@ public class EstoqueTest {
         Livro livro = LivroBuilder.umLivro().agora();
         Estoque estoque = new Estoque();
         estoque.setId(1L);
-        estoque.setEstoqueInicial(1);
         estoque.setLivro(livro);
         estoque.setEstoqueAtual(1);
         estoque.setSituacaoLivro(SituacaoLivro.DISPONIVEL);
 
         Assertions.assertEquals(estoque.getId(), 1L);
         Assertions.assertEquals(estoque.getEstoqueAtual(), 1);
-        Assertions.assertEquals(estoque.getEstoqueInicial(), 1);
         Assertions.assertEquals(estoque.getLivro(), livro);
         Assertions.assertEquals(estoque.getSituacaoLivro(), SituacaoLivro.DISPONIVEL);
     }

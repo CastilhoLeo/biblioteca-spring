@@ -1,13 +1,11 @@
 package br.com.leonardo.bibliotecaspring.builders;
 
-import br.com.leonardo.bibliotecaspring.entity.Cliente;
-import br.com.leonardo.bibliotecaspring.entity.Estoque;
-import br.com.leonardo.bibliotecaspring.entity.Livro;
-import br.com.leonardo.bibliotecaspring.entity.Locacao;
+import br.com.leonardo.bibliotecaspring.entity.*;
 import br.com.leonardo.bibliotecaspring.enums.SituacaoLivro;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class LivroBuilder {
@@ -19,6 +17,7 @@ public class LivroBuilder {
     private int edicao;
     private Estoque estoque;
     private Set<Locacao> locacoes = new HashSet<Locacao>();
+    private List<Entrada> entrada;
 
     private LivroBuilder(){
     }
@@ -41,7 +40,7 @@ public class LivroBuilder {
     }
 
     public Livro agora(){
-        return new Livro(id,titulo,autor,dataPublicacao,edicao, estoque,locacoes);
+        return new Livro(id,titulo,autor,dataPublicacao,edicao, estoque,locacoes,entrada);
     }
 
 

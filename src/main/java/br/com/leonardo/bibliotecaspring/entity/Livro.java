@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -40,5 +41,8 @@ public class Livro {
     
     @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Locacao> locacoes = new HashSet<>();
+
+    @OneToMany(mappedBy = "livro", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<Entrada> entrada;
 
 }

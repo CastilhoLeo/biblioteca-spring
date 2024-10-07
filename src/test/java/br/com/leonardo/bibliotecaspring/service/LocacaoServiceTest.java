@@ -12,7 +12,6 @@ import br.com.leonardo.bibliotecaspring.entity.Locacao;
 import br.com.leonardo.bibliotecaspring.enums.PrazoLocacao;
 import br.com.leonardo.bibliotecaspring.exception.*;
 import br.com.leonardo.bibliotecaspring.repository.ClienteRepository;
-import br.com.leonardo.bibliotecaspring.repository.EstoqueRepository;
 import br.com.leonardo.bibliotecaspring.repository.LivroRepository;
 import br.com.leonardo.bibliotecaspring.repository.LocacaoRepository;
 import org.junit.jupiter.api.Assertions;
@@ -85,7 +84,7 @@ public class LocacaoServiceTest {
 
         Mockito.verify(livroRepository, Mockito.times(1)).findById(1L);
         Mockito.verify(clienteRepository, Mockito.times(1)).findById(1L);
-        Mockito.verify(estoqueService, Mockito.times(1)).saidaEstoque(locacao.getLivro());
+        Mockito.verify(estoqueService, Mockito.times(1)).saidaEsoqueLocacao(locacao.getLivro());
         Mockito.verify(estoqueService, Mockito.times(1)).verificarDisponibilidade(1L);
         Mockito.verify(locacaoConverter, Mockito.times(1)).toDto(locacao);
     }
@@ -124,7 +123,7 @@ public class LocacaoServiceTest {
 
         Mockito.verify(livroRepository, Mockito.times(1)).findById(1L);
         Mockito.verify(clienteRepository, Mockito.times(1)).findById(1L);
-        Mockito.verify(estoqueService, Mockito.times(1)).saidaEstoque(locacao.getLivro());
+        Mockito.verify(estoqueService, Mockito.times(1)).saidaEsoqueLocacao(locacao.getLivro());
         Mockito.verify(estoqueService, Mockito.times(1)).verificarDisponibilidade(1L);
         Mockito.verify(locacaoConverter, Mockito.times(1)).toDto(locacao);
     }
@@ -164,7 +163,7 @@ public class LocacaoServiceTest {
 
         Mockito.verify(livroRepository, Mockito.times(1)).findById(1L);
         Mockito.verify(clienteRepository, Mockito.times(1)).findById(1L);
-        Mockito.verify(estoqueService, Mockito.times(1)).saidaEstoque(locacao.getLivro());
+        Mockito.verify(estoqueService, Mockito.times(1)).saidaEsoqueLocacao(locacao.getLivro());
         Mockito.verify(estoqueService, Mockito.times(1)).verificarDisponibilidade(1L);
         Mockito.verify(locacaoConverter, Mockito.times(1)).toDto(locacao);
     }

@@ -20,13 +20,12 @@ public class EstoqueConverterTest {
     @Test
     public void toDto_DevePassarUmEstoqueParaDto(){
 
-        Estoque estoque = new Estoque(1L, 10, 10, SituacaoLivro.DISPONIVEL, new Livro());
+        Estoque estoque = new Estoque(1L, 10, SituacaoLivro.DISPONIVEL, new Livro());
 
         EstoqueDTO estoqueDto = estoqueConverter.toDto(estoque);
 
         Assertions.assertEquals(estoqueDto.getClass(), EstoqueDTO.class);
         Assertions.assertNotNull(estoqueDto);
-        Assertions.assertEquals(estoqueDto.getEstoqueInicial(), 10);
         Assertions.assertEquals(estoqueDto.getEstoqueAtual(), 10);
         Assertions.assertEquals(estoqueDto.getSituacaoLivro(), SituacaoLivro.DISPONIVEL);
     }
@@ -41,7 +40,6 @@ public class EstoqueConverterTest {
         Assertions.assertEquals(estoque.getClass(), Estoque.class);
         Assertions.assertNotNull(estoque);
         Assertions.assertEquals(estoque.getId(), null);
-        Assertions.assertEquals(estoque.getEstoqueInicial(), 10);
         Assertions.assertEquals(estoque.getEstoqueAtual(), 10);
         Assertions.assertEquals(estoque.getSituacaoLivro(), SituacaoLivro.DISPONIVEL);
     }

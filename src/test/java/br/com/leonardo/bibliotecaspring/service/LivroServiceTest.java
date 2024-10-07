@@ -87,14 +87,14 @@ public class LivroServiceTest {
         Mockito.when(repository.save(any(Livro.class))).thenReturn(livro);
         Mockito.when(livroConverter.toDto(any(Livro.class))).thenReturn(livroDto);
         Mockito.when(livroConverter.toEntity(any(LivroDTO.class))).thenReturn(livro);
-        Mockito.when(estoqueService.inserirEstoqueInicial(1L, 1)).thenReturn(estoque);
+        Mockito.when(estoqueService.entradaEstoque(1L, 1)).thenReturn(estoque);
 
         LivroDTO resultado = service.cadastrarLivro(request);
 
         Assertions.assertEquals(resultado.getClass(), LivroDTO.class);
         Mockito.verify(repository, times(1)).save(any(Livro.class));
         Assertions.assertEquals(resultado, livroDto);
-        Mockito.verify(estoqueService, times(1)).inserirEstoqueInicial(1L, 1);
+        Mockito.verify(estoqueService, times(1)).entradaEstoque(1L, 1);
     }
 
     @Test
