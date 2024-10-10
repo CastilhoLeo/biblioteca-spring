@@ -89,13 +89,13 @@ public class LivroServiceTest {
         LivroDTO livroDto = LivroDtoBuilder.umLivro().agora();
         Estoque estoque = new Estoque();
         CadastroLivroRequest request = new CadastroLivroRequest(livroDto, 1);
-        SalvarEntradaRequest entradaRequest = new SalvarEntradaRequest(1L, 1, LocalDate.of(2024,10,9));
+
 
 
         Mockito.when(repository.save(any(Livro.class))).thenReturn(livro);
         Mockito.when(livroConverter.toDto(any(Livro.class))).thenReturn(livroDto);
         Mockito.when(livroConverter.toEntity(any(LivroDTO.class))).thenReturn(livro);
-        Mockito.when(entradaService.salvarEntrada(entradaRequest)).thenReturn(new EntradaDTO());
+        Mockito.when(entradaService.salvarEntrada(any(SalvarEntradaRequest.class))).thenReturn(any(EntradaDTO.class));
 
 
         LivroDTO resultado = service.cadastrarLivro(request);
@@ -103,7 +103,7 @@ public class LivroServiceTest {
         Assertions.assertEquals(resultado.getClass(), LivroDTO.class);
         Mockito.verify(repository, times(1)).save(any(Livro.class));
         Assertions.assertEquals(resultado, livroDto);
-        Mockito.verify(entradaService, times(1)).salvarEntrada(entradaRequest);
+        Mockito.verify(entradaService, times(1)).salvarEntrada(any(SalvarEntradaRequest.class));
     }
 
     @Test

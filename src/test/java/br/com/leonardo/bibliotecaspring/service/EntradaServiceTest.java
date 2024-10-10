@@ -11,6 +11,7 @@ import br.com.leonardo.bibliotecaspring.repository.LivroRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -63,8 +64,17 @@ public class EntradaServiceTest {
 
         EntradaDTO res = entradaService.salvarEntrada(salvarEntradaRequest);
 
+        ArgumentCaptor<Entrada> captor = ArgumentCaptor.forClass(Entrada.class);
+        Mockito.verify(entradaRepository).save(captor.capture());
+        Entrada entradaRes = captor.getValue();
+
+
         Assertions.assertEquals(res.getClass(), EntradaDTO.class);
         Assertions.assertNotNull(res);
+        Assertions.assertNotNull(entradaRes);
+        Assertions.assertEquals(entradaRes.getLivro().getId(), 1L);
+        Assertions.assertEquals(entradaRes.getQuantidade(), 1);
+        Assertions.assertEquals(entradaRes.getData(), LocalDate.of(2024,10,9));
         Mockito.verify(livroRepository, Mockito.times(1)).findById(1L);
         Mockito.verify(entradaRepository, Mockito.times(1)).save(any(Entrada.class));
         Mockito.verify(entradaConverter, Mockito.times(1)).toDto(any(Entrada.class));
