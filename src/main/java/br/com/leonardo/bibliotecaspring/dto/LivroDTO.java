@@ -23,5 +23,4 @@ public class LivroDTO {
     private LocalDate dataPublicacao;
     private int edicao;
     private EstoqueDTO estoqueDto;
-    private List<Entrada> entradas;
 }

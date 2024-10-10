@@ -5,7 +5,9 @@ import br.com.leonardo.bibliotecaspring.builders.LivroBuilder;
 import br.com.leonardo.bibliotecaspring.builders.LivroDtoBuilder;
 import br.com.leonardo.bibliotecaspring.converter.LivroConverter;
 import br.com.leonardo.bibliotecaspring.dto.CadastroLivroRequest;
+import br.com.leonardo.bibliotecaspring.dto.EntradaDTO;
 import br.com.leonardo.bibliotecaspring.dto.LivroDTO;
+import br.com.leonardo.bibliotecaspring.dto.SalvarEntradaRequest;
 import br.com.leonardo.bibliotecaspring.entity.Estoque;
 import br.com.leonardo.bibliotecaspring.entity.Livro;
 import br.com.leonardo.bibliotecaspring.exception.LivroNaoEncontradoException;
@@ -24,6 +26,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +48,9 @@ public class LivroServiceTest {
 
     @Mock
     private LivroConverter livroConverter;
+
+    @Mock
+    private EntradaService entradaService;
 
     @InjectMocks
     private LivroService service;
@@ -83,18 +89,21 @@ public class LivroServiceTest {
         LivroDTO livroDto = LivroDtoBuilder.umLivro().agora();
         Estoque estoque = new Estoque();
         CadastroLivroRequest request = new CadastroLivroRequest(livroDto, 1);
+        SalvarEntradaRequest entradaRequest = new SalvarEntradaRequest(1L, 1, LocalDate.of(2024,10,9));
+
 
         Mockito.when(repository.save(any(Livro.class))).thenReturn(livro);
         Mockito.when(livroConverter.toDto(any(Livro.class))).thenReturn(livroDto);
         Mockito.when(livroConverter.toEntity(any(LivroDTO.class))).thenReturn(livro);
-        Mockito.when(estoqueService.entradaEstoque(1L, 1)).thenReturn(estoque);
+        Mockito.when(entradaService.salvarEntrada(entradaRequest)).thenReturn(new EntradaDTO());
+
 
         LivroDTO resultado = service.cadastrarLivro(request);
 
         Assertions.assertEquals(resultado.getClass(), LivroDTO.class);
         Mockito.verify(repository, times(1)).save(any(Livro.class));
         Assertions.assertEquals(resultado, livroDto);
-        Mockito.verify(estoqueService, times(1)).entradaEstoque(1L, 1);
+        Mockito.verify(entradaService, times(1)).salvarEntrada(entradaRequest);
     }
 
     @Test

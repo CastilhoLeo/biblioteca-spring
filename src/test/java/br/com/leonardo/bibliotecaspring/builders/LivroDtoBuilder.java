@@ -18,7 +18,7 @@ public class LivroDtoBuilder {
     private LocalDate dataPublicacao;
     private int edicao;
     private EstoqueDTO estoqueDto;
-    private Set<Locacao> locacoes = new HashSet<Locacao>();
+
 
     private LivroDtoBuilder(){
     }
@@ -30,7 +30,7 @@ public class LivroDtoBuilder {
         builder.dataPublicacao = LocalDate.of(1997, 6, 26);
         builder.edicao = 1;
         builder.estoqueDto = new EstoqueDTO();
-        builder.locacoes = new HashSet<Locacao>();
+
     }
 
     public static LivroDtoBuilder umLivro(){
